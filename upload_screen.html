@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Picopy Upload Screen</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="picopy.js"></script>
+</head>
+<body>
+
+<div class="container">
+	<div class="row">
+		<div class="col">
+		<h1 class="display-1">Picopy</h1>
+		</div>
+	</div>
+	<nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
+		<ul class="navbar-nav">
+			<li class="nav-item active">
+				<a class="nav-item active" href="#">Upload</a>		
+			</li>
+			
+		</ul>
+	</nav>
+	<br>
+	<div class="row">
+	<div class="col">
+	<form>
+	  <div class="custom-file">
+	    <input type="file" class="custom-file-input" id="customFile">
+	    <label class="custom-file-label" id="img-upload" for="customFile">Choose Image</label>
+	  </div>
+	</form>
+	</div>
+	<script>
+// Add the following code if you want the name of the file appear on select
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+	</script>
+	</div>
+<div class="row">
+	<div class="col">
+		 <img id='imgInp'/>
+	</div>
+	
+</div>
+</div>
+
+</body>
+</html> 
