@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        
+    </head>
+    <body style="background-color:black; margin: 0 !important;">
+    <div onclick="loadPhotos();" id="gallery-photos">click
+    </div>
+    <script>
+                console.log("in");
+                var gallery = document.getElementById("gallery-photos");
+                console.log("Here");
+                console.log(gallery);
+                for(var i = 1; i < 22; i++){
+                    gallery.innerHTML += '<img src="/gallery/'+i+'.jpg" class="rounded mx-auto d-block"/>';
+                }
+            console.log("DONE");
+        </script>
+    </body>
+</html>
