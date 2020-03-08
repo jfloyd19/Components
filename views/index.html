@@ -1,56 +1,150 @@
+<!-- adopted from mozilla developer pages at: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>Picopy Upload Screen</title>
+  <title>Complete file example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="upload_screen.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="picopy.js"></script>
+  <style type="text/css">
+      form img {
+      height: 475px;
+      order: 1;
+      justify-content: center;
+    }
+  </style>
+
 </head>
 <body>
-
 <div class="container">
-	<div class="row">
-		<div class="col">
-		<h1 class="display-1">Picopy</h1>
-		</div>
-	</div>
-	<nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
-		<ul class="navbar-nav">
-			<li class="nav-item active">
-				<a class="nav-item active" href="#">Upload</a>		
-			</li>
-			
-		</ul>
-	</nav>
-	<br>
-	<div class="row">
-	<div class="col">
-	<form>
-	  <div class="custom-file">
-	    <input type="file" class="custom-file-input" id="customFile">
-	    <label class="custom-file-label" id="img-upload" for="customFile">Choose Image</label>
-	  </div>
-	</form>
-	</div>
-	<script>
-// Add the following code if you want the name of the file appear on select
-$(".custom-file-input").on("change", function() {
-  var fileName = $(this).val().split("\\").pop();
-  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-});
-	</script>
-	</div>
-<div class="row">
-	<div class="col">
-		 <img id='imgInp'/>
-	</div>
-	
-</div>
-</div>
+    <div class="row">
+    <div class="col">
+    <h1 class="display-1">Picopy</h1>
+    </div>
+  </div>
+    <nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-item active" href="#">Upload</a>    
+      </li>
+      
+    </ul>
+  </nav>
+  <br>
+  <form>
+    <div class="row">
+      <div class="col">
+      <label for="image_uploads" class="custom-file-label">Choose image to upload (PNG, JPG)</label>
+      <input class="custom-file-input" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" >
+    </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col">
+    <div class="preview">
+      <p>No files currently selected for upload</p>
+    </div>
+  </div>
+    <div class="col">
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" value="" onclick="grayscale()" id="gray">grayscale
+        </label>
+      </div>
+      <div class="form-check">
+        <button onclick="revert()">Revert</button>
+      </div>
+    </div>
+  </div>
+    <div>
+      <button>Submit</button>
+    </div>
+  </form>
+  <script>
+    const input = document.querySelector('input');
+    const preview = document.querySelector('.preview');
 
+    input.style.opacity = 0;
+
+    input.addEventListener('change', updateImageDisplay);
+
+    function updateImageDisplay() {
+
+
+      while(preview.firstChild) {
+        preview.removeChild(preview.firstChild);
+      }
+
+      const curFiles = input.files;
+      if(curFiles.length === 0) {
+        const para = document.createElement('p');
+        para.textContent = 'No files currently selected for upload';
+        preview.appendChild(para);
+      } else {
+        const list = document.createElement('ol');
+        preview.appendChild(list);
+
+        for(const file of curFiles) {
+          const listItem = document.createElement('li');
+          const para = document.createElement('p');
+
+          if(validFileType(file)) {
+            para.textContent = `File Name: ${file.name}, File Size: ${returnFileSize(file.size)}.`;
+            const image = document.createElement('img');
+            image.src = URL.createObjectURL(file);
+
+            listItem.appendChild(image);
+            listItem.appendChild(para);
+          } else {
+            para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
+            listItem.appendChild(para);
+          }
+
+          list.appendChild(listItem);
+          list.style.textAlign="center";
+          list.style.listStyleType = "none";
+          para.classList.add("display-4");
+        }
+      }
+    }
+
+    function grayscale() {
+      preview.style.filter="grayscale(100%)";
+      document.getElementById("gray").disabled = true;
+
+    }
+    function revert() {
+      preview.style.filter="none";
+      document.getElementById("gray").disabled = false;
+      document.getElementById("gray").checked = false;
+
+    }
+
+    const fileTypes = [
+      'image/jpeg',
+      'image/pjpeg',
+      'image/png'
+    ];
+
+    function validFileType(file) {
+      return fileTypes.includes(file.type);
+    }
+
+    function returnFileSize(number) {
+      if(number < 1024) {
+        return number + 'bytes';
+      } else if(number > 1024 && number < 1048576) {
+        return (number/1024).toFixed(1) + 'KB';
+      } else if(number > 1048576) {
+        return (number/1048576).toFixed(1) + 'MB';
+      }
+    }
+  </script>
+</div>
 </body>
-</html> 
+</html>
