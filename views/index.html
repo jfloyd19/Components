@@ -30,9 +30,9 @@
     <nav class="navbar navbar-expand-sm bg-light navbar-light sticky-top">
     <ul class="navbar-nav">
       <li class="nav-item active">
-        <a class="nav-item active" href="#">Upload</a>    
+        <a class="nav-item active" href="#">Upload</a>
       </li>
-      
+
     </ul>
   </nav>
   <br>
@@ -47,23 +47,37 @@
     <div class="row">
     <div class="col">
     <div class="preview">
-      <p>No files currently selected for upload</p>
+      <img src="../public/img/no_image.png">
     </div>
   </div>
     <div class="col">
+      <div class="card card-block d-flex">
+      <div class="card-body">
       <div class="form-check">
         <label class="form-check-label">
-          <input type="checkbox" class="form-check-input" value="" onclick="grayscale()" id="gray">grayscale
+          <input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="gray">Grayscale</input>
         </label>
       </div>
+    </div>
+    <div class="card-footer align-items-center d-flex justify-content-center">
       <div class="form-check">
-        <button onclick="revert()">Revert</button>
+        <button type="button" class="btn btn-outline-primary" onclick="revert()">Revert</button>
       </div>
     </div>
   </div>
-    <div>
-      <button>Submit</button>
+</div>
+</div>
+<br>
+    <div class="row">
+      <div class="col">
+        <div class="card card-block d-flex">
+          <div class="card-footer align-items-center d-flex justify-content-center">
+        <button type="button" class="btn btn-outline-primary btn-lg">Submit</button>
+      </div>
+      </div>
+      </div>
     </div>
+</div>
   </form>
   <script>
     const input = document.querySelector('input');
@@ -108,20 +122,23 @@
           list.appendChild(listItem);
           list.style.textAlign="center";
           list.style.listStyleType = "none";
-          para.classList.add("display-4");
+          //para.classList.add("display-4");
         }
       }
     }
 
-    function grayscale() {
+    function grayfun() {
       preview.style.filter="grayscale(100%)";
       document.getElementById("gray").disabled = true;
 
     }
+
+
     function revert() {
       preview.style.filter="none";
       document.getElementById("gray").disabled = false;
       document.getElementById("gray").checked = false;
+
 
     }
 
