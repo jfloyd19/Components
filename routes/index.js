@@ -6,7 +6,9 @@ var path = require('path');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.sendFile(path.resolve('views/index.html'));
+  res.render('index', {
+    title: 'Picopy'
+  });
 });
 
 module.exports = router;
