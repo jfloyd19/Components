@@ -4,12 +4,20 @@ var db = require('../pgp.js');
 
 router.get('/', function(req, res, next) {
     var query = 'select * from photo;';
-	  db.any(query)
+    var query2 = 'select count(*) from photo;';
+	  db.task('get-everything', task => {
+        return task.batch([
+          task.any(query),
+          task.any(query2)
+            ]);
+        })
         .then(function (p) {
-          console.log(p);
+          console.log(p[0]);
+          console.log(p[1])
             res.render('gallery',{
             my_title: "Gallery",
-            photo_data: p
+            photo_data: p[0],
+            photo_count: p[1]
 			})
         })
         .catch(function (err) {

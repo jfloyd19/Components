@@ -24,16 +24,20 @@
 </nav>
     <body style="background-color:black; margin: 0 !important; padding-top:50px;">
     <div onclick="loadPhotos();" id="gallery-photos">
+      <%
+        var gallery = '';
+        for(var i = 0; i < photo_count[0].count; i++){
+          var path = "/gallery/" + photo_data[i].filename;
+          console.log(path); 
+          gallery += '<img src="';
+          gallery += path;
+          gallery += '" class="rounded mx-auto d-block"/>';        
+        }
+      %><%- gallery %>
     </div>
-    <script>
-                console.log("in");
-                var gallery = document.getElementById("gallery-photos");
-                console.log("Here");
-                console.log(gallery);
-                for(var i = 1; i < 22; i++){
-                    gallery.innerHTML += '<img src="/gallery/'+i+'.jpg" class="rounded mx-auto d-block"/>';
-                }
-            console.log("DONE");
-        </script>
+
+
+      
+          
     </body>
 </html>
