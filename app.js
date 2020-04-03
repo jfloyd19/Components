@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var gallery = require('./routes/gallery');
 var register = require('./routes/register');
 var createAccount = require('./routes/createAccount');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/', index);
 app.use('/gallery', gallery);
 app.use('/register', register);
 app.use('/createaccount',createAccount);
+app.use('/login', login)
 app.use(express.static(__dirname + '/public'));
 
 // catch 404 and forward to error handler
