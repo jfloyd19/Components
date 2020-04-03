@@ -7,7 +7,7 @@ var db = require('../pgp.js');
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Picopy',
-    user:[]
+    user:req.session.user
   });
 });
 

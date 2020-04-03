@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     req.session = null;
   res.render('index', {
     title: 'Picopy',
-    user:[]
+    user:null
   });
 });
 

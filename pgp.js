@@ -2,11 +2,11 @@ var pgp = require('pg-promise')();
 pgp.pg.defaults.ssl = true;
 
 const dbConfig = {
-  host: 'ec2-34-193-232-231.compute-1.amazonaws.com',
+  host: 'ec2-52-87-135-240.compute-1.amazonaws.com',
   port: 5432,
-  database: 'd79o9u7hg8n0c9',
-  user: 'iycpdeaxlyiscy',
-  password: '5f3ec7574b7804c02a11c81c683c67a9b052dfacd111a2cecb4f2fd525e035fa'
+  database: 'd8gcf7qcep4147',
+  user: 'psptzlcszcboiz',
+  password: '5c58ab3f76aee3ca9fb7e70154607fdd001ebf358bf53d20b9c670fcc98150d7'
 };
 var db = pgp(dbConfig);
 

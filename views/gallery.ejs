@@ -20,6 +20,9 @@
       <li><a>Your Photos</a></li>
       <li><a href="#">View Online Gallery</a></li>
     </ul>
+    <ul class="nav navbar-nav navbar-right" style="color:white">
+      <li><a><span class="glyphicon glyphicon-user"style="margin-right:10px;"></span><%- user == null ? '' : 'Logged in as ' + user.username %></a></li>
+    </ul>
   </div>
 </nav>
     <body style="background-color:black; margin: 0 !important; padding-top:50px;">
