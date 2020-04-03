@@ -33,10 +33,10 @@
       <div class="float-right">
         <%
           loginBtn = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login</button>';
-          
+
         %>
         <%- user.length == 0 ? loginBtn : "Logged in as " + user.username + ". Not you? <a href='/'>Logout</a>" %>
-      
+
 
       </div>
 
@@ -71,13 +71,13 @@
                         </div>
                 <input type="submit" value="submit" id="submitbtn" class="btn btn-primary btn-block">
             </form>
-             
+
             </div>
 
             <a style="margin-left: 10px;"href="/register">New user? Register here.</a>
             <!-- Modal footer -->
             <div class="modal-footer">
-              <div class="float-left"> 
+              <div class="float-left">
           </div>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
@@ -116,14 +116,16 @@
     <div class="col">
       <div class="card card-block d-flex">
       <div class="card-body">
-      <div class="form-check">
-        <label class="form-check-label">
+      <div class="checkbox">
           <input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="gray">Grayscale</input>
-        </label>
+      </div>
+      <div class="checkbox">
+          <input type="checkbox" class="form-check-input" value="" onclick="invertfun()" id="invert">Invert</input>
       </div>
     </div>
     <div class="card-footer align-items-center d-flex justify-content-center">
       <div class="form-check">
+        <button type="button" class="btn btn-outline-primary" onclick="apply()">Apply Selected Filters</button>
         <button type="button" class="btn btn-outline-primary" onclick="revert()">Revert</button>
       </div>
     </div>
@@ -135,7 +137,7 @@
       <div class="col">
         <div class="card card-block d-flex">
           <div class="card-footer align-items-center d-flex justify-content-center">
-        <button type="button" class="btn btn-outline-primary btn-lg">Submit</button>
+        <button type="button" class="btn btn-outline-primary btn-lg">Submit to Gallery</button>
       </div>
       </div>
       </div>
@@ -143,6 +145,8 @@
 </form>
 </div>
   <script>
+
+    var filter_string = ""
     const input = document.getElementById('image_uploads');
     const preview = document.querySelector('.preview');
 
@@ -191,16 +195,30 @@
     }
 
     function grayfun() {
-      preview.style.filter="grayscale(100%)";
+      filter_string +=" grayscale(100%)";
       document.getElementById("gray").disabled = true;
+
+    }
+
+    function invertfun() {
+      filter_string +=" invert(100%)";
+      document.getElementById("invert").disabled = true;
+
+    }
+
+    function apply() {
+      preview.style.filter=filter_string;
 
     }
 
 
     function revert() {
       preview.style.filter="none";
+      filter_string = "";
       document.getElementById("gray").disabled = false;
       document.getElementById("gray").checked = false;
+      document.getElementById("invert").disabled = false;
+      document.getElementById("invert").checked = false;
 
 
     }
