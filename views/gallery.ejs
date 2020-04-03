@@ -24,6 +24,18 @@
 </nav>
     <body style="background-color:black; margin: 0 !important; padding-top:50px;">
     <div onclick="loadPhotos();" id="gallery-photos">
+      <!-- 
+        Basically what needs to be done in the gallery, obviously implement whatever else you feel is necessary:
+        1) "View my photos" which queries only the user who is logged in's photos. 
+        2) Sort by date
+        3) Ability to remove your own photos from the gallery?
+        4) Hover -> more info on the photo
+
+        I will add a user object that will be passed in (though it won't always contain data i.e. if a user isn't logged in)
+        and I will amend the photo database so that it holds a string containing all of the filters applied to it. 
+        Let's not add a login button to this page because we don't actually have a system to hold a user's session, 
+        so I'll just make a jerryrigged version of it (so to speak)
+      -->
       <%
         var gallery = '';
         for(var i = 0; i < photo_count[0].count; i++){
