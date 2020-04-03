@@ -8,6 +8,7 @@ router.post('/', function(req, res, next) {
 	  db.any(query)
         .then(function (p) {
             console.log(p);
+            req.session.user = p[0];
             res.render('index', {
                 title: 'Picopy',
                 user:p[0]

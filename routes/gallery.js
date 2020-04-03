@@ -12,12 +12,12 @@ router.get('/', function(req, res, next) {
             ]);
         })
         .then(function (p) {
-          console.log(p[0]);
-          console.log(p[1])
             res.render('gallery',{
             my_title: "Gallery",
             photo_data: p[0],
-            photo_count: p[1]
+            photo_count: p[1],
+            //This will be null if no one is logged in!
+            user: req.session.user
 			})
         })
         .catch(function (err) {
