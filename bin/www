@@ -1,14 +1,4 @@
 #!/usr/bin/env node
-
-
-if(process.platform === "linux"){
-  var spawn = require('child_process').spawn
-  console.log("Attempting to start the database server. make sure you have created the database with the appropriate script and set a password. Make sure this password matches the password in the 'app.js' file.");
-  const db = spawn("sudo", ["-u", "postgres", "service", "postgresql", "start"]);
-}else{
-  console.log("Not starting the database. Do not expect database functions to work. For DB functionality, run on a linux (virtual) machine.");
-}
-
 /**
  * Module dependencies.
  */
