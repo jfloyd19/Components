@@ -163,12 +163,14 @@
           <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun()" id="sepia">Sepia</label>
       </div>
     </div>
+    <!--
     <div class="card-footer align-items-center d-flex justify-content-center">
       <div class="form-check">
         <button type="button" class="btn btn-outline-primary" onclick="apply()">Apply Selected Filters</button>
         <button type="button" class="btn btn-outline-primary" onclick="revert()">Revert</button>
       </div>
     </div>
+    -->
   </div>
 </div>
 </div>
@@ -235,84 +237,188 @@
     }
 
     function grayfun() {
-      filter_string +=" grayscale(100%)";
-      document.getElementById("gray").disabled = true;
+      var filter_name = " grayscale(100%)"
+      if(document.getElementById("gray").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
 
     function invertfun() {
-      filter_string +=" invert(100%)";
-      document.getElementById("invert").disabled = true;
+      var filter_name = " invert(100%)";
+      if(document.getElementById("invert").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
 
     function lightblurfun() {
-      filter_string +=" blur(2px)";
-      document.getElementById("lightblur").disabled = true;
-
+      var filter_name = " blur(2px)";
+      if(document.getElementById("lightblur").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
     }
-    function heavyblurfun() {
-      filter_string +=" blur(4px)";
-      document.getElementById("heavyblur").disabled = true;
+    }
 
+    function heavyblurfun() {
+      var filter_name = " blur(4px)";
+      if(document.getElementById("heavyblur").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
     }
     function darkerfun() {
-      filter_string +=" brightness(50%)";
-      document.getElementById("darker").disabled = true;
+      var filter_name = " brightness(50%)";
+      if(document.getElementById("darker").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function lighterfun() {
-      filter_string +=" brightness(150%)";
-      document.getElementById("lighter").disabled = true;
+      var filter_name = " brightness(150%)";
+      if(document.getElementById("lighter").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function lowcontrastfun() {
-      filter_string +=" contrast(50%)";
-      document.getElementById("lowcontrast").disabled = true;
+      var filter_name = " contrast(50%)";
+      if(document.getElementById("lowcontrast").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function highcontrastfun() {
-      filter_string +=" contrast(150%)";
-      document.getElementById("highcontrast").disabled = true;
+      var filter_name = " contrast(150%)";
+      if(document.getElementById("highcontrast").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function dropshadowfun() {
-      filter_string +=" drop-shadow(8px 8px 10px gray)";
-      document.getElementById("dropshadow").disabled = true;
+      var filter_name = " drop-shadow(8px 8px 10px gray)";
+      if(document.getElementById("dropshadow").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function huerotate90fun() {
-      filter_string +=" hue-rotate(90deg)";
-      document.getElementById("huerotate90").disabled = true;
+      var filter_name = " hue-rotate(90deg)";
+      if(document.getElementById("huerotate90").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function huerotate180fun() {
-      filter_string +=" hue-rotate(180deg)";
-      document.getElementById("huerotate180").disabled = true;
+      var filter_name = " hue-rotate(180deg)";
+      if(document.getElementById("huerotate180").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function huerotate270fun() {
-      filter_string +=" hue-rotate(270deg)";
-      document.getElementById("huerotate270").disabled = true;
+      var filter_name = " hue-rotate(270deg)";
+      if(document.getElementById("huerotate270").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function transparentfun() {
-      filter_string +=" opacity(30%)";
-      document.getElementById("transparent").disabled = true;
+      var filter_name = " opacity(30%)";
+      if(document.getElementById("transparent").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function saturatefun() {
-      filter_string +=" saturate(8)";
-      document.getElementById("saturate").disabled = true;
+      var filter_name = " saturate(8)";
+      if(document.getElementById("saturate").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
     function sepiafun() {
-      filter_string +=" sepia(50%)";
-      document.getElementById("sepia").disabled = true;
+      var filter_name = " sepia(50%)";
+      if(document.getElementById("sepia").checked == false){
+        filter_string = filter_string.replace(filter_name,"");
+        preview.style.filter=filter_string;
+      }
+      else{
+      filter_string +=filter_name;
+      preview.style.filter=filter_string;
+    }
 
     }
 
-
+/*
     function apply() {
       preview.style.filter=filter_string;
 
@@ -355,6 +461,7 @@
 
 
     }
+    */
 
     const fileTypes = [
       'image/jpeg',
