@@ -116,12 +116,51 @@
   </div>
     <div class="col">
       <div class="card card-block d-flex">
-      <div class="card-body">
-      <div class="checkbox">
-          <input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="gray">Grayscale</input>
+      <div class="card-body justify-content-center">
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="gray">Grayscale</label>
       </div>
-      <div class="checkbox">
-          <input type="checkbox" class="form-check-input" value="" onclick="invertfun()" id="invert">Invert</input>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="invertfun()" id="invert">Invert</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lightblurfun()" id="lightblur">Light Blur</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="heavyblurfun()" id="heavyblur">Heavy Blur</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="darkerfun()" id="darker">Darker</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lighterfun()" id="lighter">Lighter</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lowcontrastfun()" id="lowcontrast">Low Contrast</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="highcontrastfun()" id="highcontrast">High Contrast</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="dropshadowfun()" id="dropshadow">Drop Shadow</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate90fun()" id="huerotate90">Rotate Hue 90 Degrees</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate180fun()" id="huerotate180">Rotate Hue 180 Degrees</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate270fun()" id="huerotate270">Rotate Hue 270 Degrees</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="transparentfun()" id="transparent">Increased Transparency</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="saturatefun()" id="saturate">Saturate</label>
+      </div>
+      <div class="form-check">
+          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun()" id="sepia">Sepia</label>
       </div>
     </div>
     <div class="card-footer align-items-center d-flex justify-content-center">
@@ -207,6 +246,73 @@
 
     }
 
+    function lightblurfun() {
+      filter_string +=" blur(2px)";
+      document.getElementById("lightblur").disabled = true;
+
+    }
+    function heavyblurfun() {
+      filter_string +=" blur(4px)";
+      document.getElementById("heavyblur").disabled = true;
+
+    }
+    function darkerfun() {
+      filter_string +=" brightness(50%)";
+      document.getElementById("darker").disabled = true;
+
+    }
+    function lighterfun() {
+      filter_string +=" brightness(150%)";
+      document.getElementById("lighter").disabled = true;
+
+    }
+    function lowcontrastfun() {
+      filter_string +=" contrast(50%)";
+      document.getElementById("lowcontrast").disabled = true;
+
+    }
+    function highcontrastfun() {
+      filter_string +=" contrast(150%)";
+      document.getElementById("highcontrast").disabled = true;
+
+    }
+    function dropshadowfun() {
+      filter_string +=" drop-shadow(8px 8px 10px gray)";
+      document.getElementById("dropshadow").disabled = true;
+
+    }
+    function huerotate90fun() {
+      filter_string +=" hue-rotate(90deg)";
+      document.getElementById("huerotate90").disabled = true;
+
+    }
+    function huerotate180fun() {
+      filter_string +=" hue-rotate(180deg)";
+      document.getElementById("huerotate180").disabled = true;
+
+    }
+    function huerotate270fun() {
+      filter_string +=" hue-rotate(270deg)";
+      document.getElementById("huerotate270").disabled = true;
+
+    }
+    function transparentfun() {
+      filter_string +=" opacity(30%)";
+      document.getElementById("transparent").disabled = true;
+
+    }
+    function saturatefun() {
+      filter_string +=" saturate(8)";
+      document.getElementById("saturate").disabled = true;
+
+    }
+    function sepiafun() {
+      filter_string +=" sepia(50%)";
+      document.getElementById("sepia").disabled = true;
+
+    }
+
+
     function apply() {
       preview.style.filter=filter_string;
 
@@ -220,6 +326,32 @@
       document.getElementById("gray").checked = false;
       document.getElementById("invert").disabled = false;
       document.getElementById("invert").checked = false;
+      document.getElementById("lightblur").disabled = false;
+      document.getElementById("lightblur").checked = false;
+      document.getElementById("heavyblur").disabled = false;
+      document.getElementById("heavyblur").checked = false;
+      document.getElementById("darker").disabled = false;
+      document.getElementById("darker").checked = false;
+      document.getElementById("lighter").disabled = false;
+      document.getElementById("lighter").checked = false;
+      document.getElementById("lowcontrast").disabled = false;
+      document.getElementById("lowcontrast").checked = false;
+      document.getElementById("highcontrast").disabled = false;
+      document.getElementById("highcontrast").checked = false;
+      document.getElementById("dropshadow").disabled = false;
+      document.getElementById("dropshadow").checked = false;
+      document.getElementById("huerotate90").disabled = false;
+      document.getElementById("huerotate90").checked = false;
+      document.getElementById("huerotate180").disabled = false;
+      document.getElementById("huerotate180").checked = false;
+      document.getElementById("huerotate270").disabled = false;
+      document.getElementById("huerotate270").checked = false;
+      document.getElementById("transparent").disabled = false;
+      document.getElementById("transparent").checked = false;
+      document.getElementById("saturate").disabled = false;
+      document.getElementById("saturate").checked = false;
+      document.getElementById("sepia").disabled = false;
+      document.getElementById("sepia").checked = false;
 
 
     }
