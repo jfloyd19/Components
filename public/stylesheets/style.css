@@ -13,3 +13,35 @@
   width: 100% !important;
   height: auto !important;
 }
+.dropdown-menu{
+  width:100%;
+  text-align: center;
+  background-color:#080808;
+}
+.dropdown-item{
+  display: block;
+  padding-top:5px;
+  padding-bottom:5px;
+  color:#9d9d9d;
+}
+.dropdown-item:hover{
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.modal-dialog {
+  transform: translate(0, -50%);
+  top: 30%;
+}
+
+select{
+  top: 50%;
+  transform: translate(0, 25%);
+  background-color: #222222 !important;
+  color: #9d9d9d !important;
+}
+
+#filter-select{
+  background-color:white !important;
+}
