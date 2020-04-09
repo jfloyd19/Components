@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS photo (
     photo_id SERIAL PRIMARY KEY,
     user_id INTEGER NOT NULL REFERENCES p_user(user_id),
     filename TEXT NOT NULL,
-    private BOOLEAN NOT NULL DEFAULT 'false',
+    filters TEXT,
+private BOOLEAN NOT NULL DEFAULT 'false',
     date_created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
