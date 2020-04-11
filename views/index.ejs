@@ -175,19 +175,25 @@
 </div>
 </div>
 <br>
-    <div class="row">
+    
+</form>
+ <form action="upload" method="POST" class="multipart/form-data">
+<div class="row">
       <div class="col">
         <div class="card card-block d-flex">
           <div class="card-footer align-items-center d-flex justify-content-center">
-        <button type="button" class="btn btn-outline-primary btn-lg">Submit to Gallery</button>
+	<input type="hidden" name = "imgSource" id="imgSource" class="form-control" value = "returnFileSrc()">
+	<input type="hidden" name = "extName" class="form-control" value="returnFileType()">
+        <button type="submit" class="btn btn-outline-primary btn-lg">Submit to Gallery</button>
       </div>
       </div>
       </div>
     </div>
 </form>
+
 </div>
   <script>
-
+var imageSource = ""
     var filter_string = ""
     const input = document.getElementById('image_uploads');
     const preview = document.querySelector('.preview');
@@ -220,6 +226,7 @@
             para.textContent = `File Name: ${file.name}, File Size: ${returnFileSize(file.size)}.`;
             const image = document.createElement('img');
             image.src = URL.createObjectURL(file);
+		imageSource = image.src;
 
             listItem.appendChild(image);
             listItem.appendChild(para);
@@ -462,16 +469,30 @@
 
     }
     */
-
     const fileTypes = [
       'image/jpeg',
       'image/pjpeg',
       'image/png'
     ];
-
+	
+    let fileType = '';
     function validFileType(file) {
-      return fileTypes.includes(file.type);
+       if(fileTypes.includes(file.type)){
+	var res = file.type.split("/")
+	fileType = res[res.length -1];
+	return true;
+	}else{
+	return false;
+	}
     }
+	
+	function returnFileType(){
+	return fileType;
+}
+
+	function returnFileSrc(){
+	return imageSource;
+}
 
     function returnFileSize(number) {
       if(number < 1024) {
