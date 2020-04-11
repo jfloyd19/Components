@@ -12,6 +12,7 @@ var register = require('./routes/register');
 var createAccount = require('./routes/createAccount');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
+var upload = require('./routes/upload');
 
 var app = express();
 
@@ -40,6 +41,7 @@ app.use('/register', register);
 app.use('/createaccount',createAccount);
 app.use('/login', login);
 app.use('/logout', logout);
+app.use('/upload', upload);
 app.use(express.static(__dirname + '/public'));
 
 // catch 404 and forward to error handler
@@ -60,9 +62,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000, () => {
-console.log("3000");
-});
+
 
 module.exports = app;
-
