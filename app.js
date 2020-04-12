@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cookieSession = require('cookie-session');
 
+
 var index = require('./routes/index');
 var gallery = require('./routes/gallery');
 var register = require('./routes/register');
@@ -41,7 +42,7 @@ app.use('/register', register);
 app.use('/createaccount',createAccount);
 app.use('/login', login);
 app.use('/logout', logout);
-app.use('/upload', upload);
+app.post('/single',  upload);
 app.use(express.static(__dirname + '/public'));
 
 // catch 404 and forward to error handler

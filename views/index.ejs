@@ -99,15 +99,19 @@
     </ul>
   </nav>
   <br>
-  <form>
-
-    <div class="row">
+<div class="row">
       <div class="col">
+<form action="/single" method="POST" enctype="multipart/form-data">
       <label for="image_uploads" class="custom-file-label">Choose image to upload (PNG, JPG)</label>
       <input class="custom-file-input" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" >
+<button type="submit" class="btn btn-primary">Save</button>
+	</form>
     </div>
     </div>
     <br>
+  <form>
+
+    
     <div class="row">
     <div class="col">
     <div class="preview">
