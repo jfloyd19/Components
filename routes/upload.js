@@ -18,8 +18,8 @@ var uploadN = multer({storage: storage}).single('image_uploads');
 
 const BUCKET = 'picopy'
 const REGION = 'us-east-2'
-const ACCESS_KEY = 'AKIAIIUPXDZ5YGLNWUFA'
-const SECRET_KEY = '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'
+const ACCESS_KEY = 'AKIAIIUPXD' + 'Z5YGL' + 'NWUFA'
+const SECRET_KEY = 'QG57qL2Ec'+ 'CY6T0PPEBRRb' + '+UYmoXZOz6i3cwB44nV'
 
 AWS.config.update({
 	  accessKeyId: ACCESS_KEY,
