@@ -45,3 +45,81 @@ select{
 #filter-select{
   background-color:white !important;
 }
+
+#main{
+  height:100% !important;
+  margin:0;
+  width:100%;
+  background-color:#222;
+  max-width: 100%;
+  color:white;
+}
+#side-bar{
+  background-color: #222;
+  height:100px;
+}
+
+#header-logo{
+  padding-left:30px;
+  padding-top: 10px;
+}
+.filters{
+  color:#9d9d9d;
+}
+#filter-title{
+  padding-top: 10px;
+  padding-bottom:5px;
+  font-size: 35px;
+  border-bottom:1px solid #9d9d9d;
+  color:white;
+}
+#prev{
+  background-color:#080808;
+}
+#login-sec{
+  position: absolute;
+  bottom:0;
+  left:0;
+  padding:10px;
+  width:100%;
+  text-align:center;
+}
+
+#gallery-link{
+  color:#9d9d9d;
+  text-decoration: none;
+  padding-left:35px;
+  font-size: 20px;
+}
+#gallery-link:hover{
+  color:white;
+}
+#imgicon{
+  font-size:100px;
+  
+}
+#no-image{
+  text-align:center;
+  margin-top:25%;
+  color:#9d9d9d;
+}
+#footer{
+  position: absolute;
+  bottom:0;
+  margin-left:50%;
+  transform: translateX(-50%);
+}
+#save-button{
+  margin-bottom:30px;
+}
+.preview{
+  text-align:center;
+}
+
+#prev{padding:0;}
+ol{
+  padding:0;
+}
+#filter-row{
+  margin-top:50%;
+}

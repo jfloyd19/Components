@@ -12,18 +12,110 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   <script src="picopy.js"></script>
   <script src="javascripts/fabric.js"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://kit.fontawesome.com/6fee0b6358.js" crossorigin="anonymous"></script>
   <style type="text/css">
       form img {
       height: 475px;
       order: 1;
       justify-content: center;
     }
+    html, body {margin: 0; height: 100%; overflow: hidden}
   </style>
 <script src="dist/popupS.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/popupS.min.css">
 </head>
 <body>
-
+<div id="main" class="container">
+  <div class="row">
+      <div class="col-sm-2" id="side-bar">
+        <div id="header-logo" class="row text-xs-center">
+          <h1 class="display-4">Picopy</h1>
+        </div>
+        <div class="row">
+            <a id="gallery-link" href="/gallery">View Gallery</a>
+        </div>
+        <div class="row" id="filter-row">
+          <div class="col filters">
+            <h3 class="display-4" id="filter-title">Filters</h3>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="gray">Grayscale</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="invertfun()" id="invert">Invert</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lightblurfun()" id="lightblur">Light Blur</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="heavyblurfun()" id="heavyblur">Heavy Blur</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="darkerfun()" id="darker">Darker</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lighterfun()" id="lighter">Lighter</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lowcontrastfun()" id="lowcontrast">Low Contrast</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="highcontrastfun()" id="highcontrast">High Contrast</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="dropshadowfun()" id="dropshadow">Drop Shadow</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate90fun()" id="huerotate90">Rotate Hue 90 Degrees</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate180fun()" id="huerotate180">Rotate Hue 180 Degrees</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate270fun()" id="huerotate270">Rotate Hue 270 Degrees</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="transparentfun()" id="transparent">Increased Transparency</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="saturatefun()" id="saturate">Saturate</label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun()" id="sepia">Sepia</label>
+                </div>
+          </div>
+        </div>
+        <div id="login-sec">
+            <%
+            loginBtn = '<button type="button" id="lgbtn" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login</button>';
+            console.log(user)
+            %>
+          <%- user == null ? loginBtn : "Logged in as " + user.username +". <br>Not you? <a href='/logout'>Logout</a>" %>
+        </div>   
+      </div>
+     
+        <div class="col-sm-10" id="prev">
+          <div class="preview">
+              <img style="margin-top:25%" src="img/no_image2.png">
+          </div>
+          <div id="footer">
+              <form action="/single" method="POST" enctype="multipart/form-data" class="form-inline">
+                <div class="form group">
+                  <label for="image_uploads">Click here to upload an image</label>
+                  <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" >
+                  </div>
+                  <%
+                  saveBtn = ' <button id="save-button" type="submit" class="btn btn-primary">Save To Gallery</button>';
+                  loginBtn2 = '<button id="save-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login To Save Photo</button>';
+                  %>
+                  <%- user == null ? loginBtn2 : saveBtn %>
+                 
+            </form>
+          </div>
+        </div>
+  </div>
+  
+</div>
 <div class="container">
     <div class="row">
     <div class="col">
@@ -98,90 +190,8 @@
 
     </ul>
   </nav>
-  <br>
-<div class="row">
-      <div class="col">
-<form action="/single" method="POST" enctype="multipart/form-data">
-      <label for="image_uploads" class="custom-file-label">Choose image to upload (PNG, JPG)</label>
-      <input class="custom-file-input" type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" >
-<button type="submit" class="btn btn-primary">Save</button>
-	</form>
-    </div>
-    </div>
-    <br>
-  <form>
-
-    
-    <div class="row">
-    <div class="col">
-    <div class="preview">
-      <img src="img/no_image.png">
-    </div>
-  </div>
-    <div class="col">
-      <div class="card card-block d-flex">
-      <div class="card-body justify-content-center">
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="gray">Grayscale</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="invertfun()" id="invert">Invert</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lightblurfun()" id="lightblur">Light Blur</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="heavyblurfun()" id="heavyblur">Heavy Blur</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="darkerfun()" id="darker">Darker</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lighterfun()" id="lighter">Lighter</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lowcontrastfun()" id="lowcontrast">Low Contrast</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="highcontrastfun()" id="highcontrast">High Contrast</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="dropshadowfun()" id="dropshadow">Drop Shadow</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate90fun()" id="huerotate90">Rotate Hue 90 Degrees</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate180fun()" id="huerotate180">Rotate Hue 180 Degrees</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate270fun()" id="huerotate270">Rotate Hue 270 Degrees</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="transparentfun()" id="transparent">Increased Transparency</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="saturatefun()" id="saturate">Saturate</label>
-      </div>
-      <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun()" id="sepia">Sepia</label>
-      </div>
-    </div>
-    <!--
-    <div class="card-footer align-items-center d-flex justify-content-center">
-      <div class="form-check">
-        <button type="button" class="btn btn-outline-primary" onclick="apply()">Apply Selected Filters</button>
-        <button type="button" class="btn btn-outline-primary" onclick="revert()">Revert</button>
-      </div>
-    </div>
-    -->
-  </div>
-</div>
-</div>
-<br>
-    
-</form>
- <form action="upload" method="POST" class="multipart/form-data">
+  
+ <!-- <form action="upload" method="POST" class="multipart/form-data">
 <div class="row">
       <div class="col">
         <div class="card card-block d-flex">
@@ -195,8 +205,13 @@
     </div>
 </form>
 
-</div>
+</div> -->
   <script>
+    $(document).ready(function(){
+      $("#side-bar").css("height", window.innerHeight);
+    });
+    
+
 var imageSource = ""
     var filter_string = ""
     const input = document.getElementById('image_uploads');
@@ -229,11 +244,10 @@ var imageSource = ""
           if(validFileType(file)) {
             para.textContent = `File Name: ${file.name}, File Size: ${returnFileSize(file.size)}.`;
             const image = document.createElement('img');
+            image.setAttribute("id", "curr-pic");
             image.src = URL.createObjectURL(file);
 		imageSource = image.src;
-
             listItem.appendChild(image);
-            listItem.appendChild(para);
           } else {
             para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
             listItem.appendChild(para);
@@ -242,6 +256,8 @@ var imageSource = ""
           list.appendChild(listItem);
           list.style.textAlign="center";
           list.style.listStyleType = "none";
+          var bigger = $("#curr-pic").prop("width") > $("#curr-pic").prop("height") ? "width" : "height";
+          $("#curr-pic").prop(bigger, bigger == "width" ? $("#prev").width() : $("#prev").height());
           //para.classList.add("display-4");
         }
       }
