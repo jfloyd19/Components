@@ -123,3 +123,51 @@ ol{
 #filter-row{
   margin-top:50%;
 }
+.filterText {
+  cursor: pointer;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  width: auto;
+  text-align:center;
+  }
+  .filterText .fadedbox {
+  background-color: #ffffff;
+  position: static;
+  top: 0;
+  left: 0;
+  color: #fff;
+  -webkit-transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  -ms-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+  opacity: 0;
+  width: auto;
+  height: auto;
+  padding: 130px 20px;
+  }
+  .filterText:hover .fadedbox { opacity: 1; }
+  .filterText .text {
+  -webkit-transition: all 300ms ease-out;
+  -moz-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  -ms-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+  transform: translateY(30px);
+  -webkit-transform: translateY(30px);
+  }
+  .filterText .title {
+  font-size: 2.5em;
+  text-transform: uppercase;
+  color: rgb(255, 255, 255);
+  opacity: 0;
+  transition-delay: 0.2s;
+  transition-duration: 0.3s;
+  }
+  .filterText:hover .title,
+  .filterText:focus .title {
+  opacity: 1;
+  transform: translateY(-50px);
+  -webkit-transform: translateY(-50px);
+  }

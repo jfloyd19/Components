@@ -117,15 +117,27 @@
       -->
       <%
         var gallery = '';
-        for(var i = 0; i < photo_count[0].count; i++){
+        var filter = 'Filter name';
+        for(var i = 0; i < photo_count[0].count; i++)
+        {
           var path = "/gallery/" + photo_data[i].filename;
           console.log(path); 
-          gallery += '<img src="';
-          gallery += path;
-          gallery += '" class="rounded mx-auto d-block"/>';        
+          gallery += '<div class = "filterText">';
+          gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
+          gallery += '<div class ="title">' +filter +'</div>';
+          gallery += '</div>'   
         }
-      %><%- gallery %>
-    </div>
+      %>
+
+
+      <%- gallery %> 
+      <!-- <div class="filterText">
+        <img src="/gallery/1.jpg" class="filterText"/>
+        <div class="fadedbox">
+          <div class="title text">Issa test</div>
+        </div>
+      </div>
+    </div> -->
 
 
       
