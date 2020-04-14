@@ -122,10 +122,12 @@
         {
           var path = "/gallery/" + photo_data[i].filename;
           console.log(path); 
+          gallery += '<a href =' + photo_data[i].filename + '>';
           gallery += '<div class = "filterText">';
           gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
           gallery += '<div class ="title">' +filter +'</div>';
-          gallery += '</div>'   
+          gallery += '</div>'
+          gallery += '</a>';   
         }
       %>
 
