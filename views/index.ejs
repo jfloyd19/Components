@@ -27,6 +27,8 @@
 </head>
 <body>
 <div id="main" class="container">
+  <canvas id="myCanvas"></canvas>
+  <img id="final_img" style="margin-top:25%" src="img/no_image2.png">
   <div class="row">
       <div class="col-sm-2" id="side-bar">
         <div id="header-logo" class="row text-xs-center">
@@ -91,9 +93,9 @@
             console.log(user)
             %>
           <%- user == null ? loginBtn : "Logged in as " + user.username +". <br>Not you? <a href='/logout'>Logout</a>" %>
-        </div>   
+        </div>
       </div>
-     
+
         <div class="col-sm-10" id="prev">
           <div class="preview">
               <img style="margin-top:25%" src="img/no_image2.png">
@@ -109,12 +111,12 @@
                   loginBtn2 = '<button id="save-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login To Save Photo</button>';
                   %>
                   <%- user == null ? loginBtn2 : saveBtn %>
-                 
+
             </form>
           </div>
         </div>
   </div>
-  
+
 </div>
 <div class="container">
     <div class="row">
@@ -190,7 +192,7 @@
 
     </ul>
   </nav>
-  
+
  <!-- <form action="upload" method="POST" class="multipart/form-data">
 <div class="row">
       <div class="col">
@@ -210,7 +212,7 @@
     $(document).ready(function(){
       $("#side-bar").css("height", window.innerHeight);
     });
-    
+
 
 var imageSource = ""
     var filter_string = ""
@@ -218,6 +220,9 @@ var imageSource = ""
     const preview = document.querySelector('.preview');
 
     input.style.opacity = 0;
+    document.getElementById('myCanvas').style.display = 'none';
+    document.getElementById('final_img').style.display = 'none';
+
 
     input.addEventListener('change', updateImageDisplay);
     console.log("script");
@@ -443,6 +448,24 @@ var imageSource = ""
       preview.style.filter=filter_string;
     }
 
+
+
+    }
+
+    function convertToCanvasThenImg(){
+      var canvas = document.getElementById('myCanvas');
+      var ctx = canvas.getContext("2d");
+
+      var preview_image = document.getElementById('curr-pic')
+      canvas.width = preview_image.naturalWidth;
+      canvas.height = preview_image.naturalHeight;
+
+      ctx.filter = filter_string;
+      ctx.drawImage(preview_image, 0, 0);
+
+      document.getElementById('final_img').src = canvas.toDataURL();
+      //document.getElementById('final_img').style.display = 'inline';
+
     }
 
 /*
@@ -494,7 +517,7 @@ var imageSource = ""
       'image/pjpeg',
       'image/png'
     ];
-	
+
     let fileType = '';
     function validFileType(file) {
        if(fileTypes.includes(file.type)){
@@ -505,7 +528,7 @@ var imageSource = ""
 	return false;
 	}
     }
-	
+
 	function returnFileType(){
 	return fileType;
 }
