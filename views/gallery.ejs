@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Picopy Gallery</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Picopy</a>
+    </div>
+    <ul class="nav navbar-nav">
+        <li clss="nav-item">
+            <a></a>
+          </li>
+      <li class="nav-item nav-link">
+          <select name="" id="view-photos-by" class="form-control" style="">
+              <option value="all-photos">All Photos</option>
+              <!-- NEED TO DISABLE THIS IF NOT LOGGED IN -->
+              <option value="my-photos">My Public Photos</option>
+              <option value="photos-by-user">Photos By User</option>
+              <option value="photos-by-filter">Photos By Filter</option>
+            </select>
+      </li>
+      <li clss="nav-item">
+          <a></a>
+        </li>
+      <li class="nav-item nav-link">
+          <select name="" id="sort-photos-by" class="form-control" style="">
+              <option value="sort-new">Newest</option>
+              <option value="sort-old">Oldest</option>
+            </select>
+      </li>
+      <li clss="nav-item">
+          <a></a>
+        </li>
+      <li class="nav-item">
+        <!-- NEED TO DISABLE THIS IF NOT LOGGED IN -->
+        <a class="nav-link">My Private Photos</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" style="color:white">
+      <li><a><span class="glyphicon glyphicon-user"style="margin-right:10px;"></span><%- user == null ? '' : 'Logged in as ' + user.username %></a></li>
+    </ul>
+  </div>
+</nav>
+    <body style="background-color:black; margin: 0 !important; padding-top:50px;">
+      <!-- NEED TO HANDLE IF THE USERNAME IS NOT FOUND IN THE GALLERY -->
+      <div class="modal fade" id="getUserModal" tabindex="-1" role="dialog" aria-labelledby="getUserModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="getUserModalLongTitle">Enter a username</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="usernameForm" placeholder="Enter username">
+                      </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="sortByUser()">View User's Photos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id="getFilterModal" tabindex="-1" role="dialog" aria-labelledby="getFilterModalTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <!-- CAN WE CENTER THIS? -->
+                    <h5 class="modal-title" id="getFilterModalLongTitle">Choose a filter to sort by</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <div class="form-group container text-center">
+                          <select name="" id="filter-select" class="form-control" style="width: 200px;">
+                              <option value="sort-new">LIST ALL THE FILTERS</option>
+                              <option value="sort-old">MORE FILTERS</option>
+                            </select>
+                        </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="sortByUser()">View Photos With Filter</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+    <div onclick="loadPhotos();" id="gallery-photos">
+      <!-- 
+        Basically what needs to be done in the gallery, obviously implement whatever else you feel is necessary:
+        1) "View my photos" which queries only the user who is logged in's photos. 
+        2) Sort by date
+        3) Ability to remove your own photos from the gallery?
+        4) Hover -> more info on the photo
+
+        I will add a user object that will be passed in (though it won't always contain data i.e. if a user isn't logged in)
+        and I will amend the photo database so that it holds a string containing all of the filters applied to it. 
+        Let's not add a login button to this page though, complicates things a bit
+      -->
+      <%
+        var gallery = '';
+        var filter = 'Filter name';
+        for(var i = 0; i < photo_count[0].count; i++)
+        {
+          var path = "/gallery/" + photo_data[i].filename;
+          console.log(path); 
+          gallery += '<a href =' + photo_data[i].filename + '>';
+          gallery += '<div class = "filterText">';
+          gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
+          gallery += '<div class ="title">' +filter +'</div>';
+          gallery += '</div>'
+          gallery += '</a>';   
+        }
+      %>
+
+
+      <%- gallery %> 
+      <!-- <div class="filterText">
+        <img src="/gallery/1.jpg" class="filterText"/>
+        <div class="fadedbox">
+          <div class="title text">Issa test</div>
+        </div>
+      </div>
+    </div> -->
+
+
+      
+          <script>
+            $(document).ready(function(){ //Make script DOM ready
+                $('#view-photos-by').change(function() { //jQuery Change Function
+                    var opval = $(this).val(); //Get value from select element
+                    if(opval=="photos-by-user"){ //Compare it and if true
+                        $('#getUserModal').modal("show"); //Open Modal
+                    }else if(opval =='photos-by-filter'){
+                      $('#getFilterModal').modal("show");
+                    }
+                });
+            });
+          </script>
+    </body>
+</html>
