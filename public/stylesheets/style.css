@@ -172,3 +172,10 @@ ol{
 html,body{
   overflow-x: hidden;
 }
+
+#private-check{
+  margin-left:40%;
+  bottom:0;
+  margin-bottom:2.5%;
+  position: absolute;
+}
