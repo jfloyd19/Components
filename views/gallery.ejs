@@ -135,24 +135,31 @@
         and I will amend the photo database so that it holds a string containing all of the filters applied to it. 
         Let's not add a login button to this page though, complicates things a bit
       -->
-      <%
-        var gallery = '';
-        var filter = 'Filter name';
-        for(var i = 0; i < photo_count[0].count; i++)
-        {
-          var path = "/gallery/" + photo_data[i].filename;
-          console.log(path); 
-          gallery += '<a class="containera" href =' + photo_data[i].filename + ' download>';
-          gallery += '<div class = "filterText">';
-          gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
-          gallery += '<div class ="title">' +photo_data[i].filters +'</div>';
-          gallery += '</div>'
-          gallery += '</a>';   
+      <div style="display:none" id="count-obj"><%- photo_count[0].count %></div>
+      <div style="display:none" id="photo-obj"><%- JSON.stringify(photo_data) %></div>
+      <script>
+        var photos = JSON.parse(document.getElementById("photo-obj").innerHTML);
+        var count = parseInt(document.getElementById("count-obj").innerHTML);
+        
+        var display = function(option1, timeOption){
+          var gallery = '';
+          var filter = 'Filter name';
+          
+          for(var i = 0; i < count; i++)
+          {
+            var path = "/gallery/" + photos[i].filename;
+            gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
+            gallery += '<div class = "filterText">';
+            gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
+            gallery += '<div class ="title">' +photos[i].filters +'</div>';
+            gallery += '</div>'
+            gallery += '</a>';   
+          }
+          console.log("HERE" + gallery);
+          var gal = document.getElementById("gallery-photos").innerHTML = gallery;
         }
-      %>
 
-
-      <%- gallery %> 
+      </script>
       <!-- <div class="filterText">
         <img src="/gallery/1.jpg" class="filterText"/>
         <div class="fadedbox">
@@ -165,6 +172,7 @@
       
           <script>
             $(document).ready(function(){ //Make script DOM ready
+              display(0,0);
                 $('#view-photos-by').change(function() { //jQuery Change Function
                     var opval = $(this).val(); //Get value from select element
                     if(opval=="photos-by-user"){ //Compare it and if true
@@ -173,7 +181,17 @@
                       $('#getFilterModal').modal("show");
                     }
                 });
-            });
+                $('#sort-photos-by').change(function() { //jQuery Change Function
+                    var opval = $(this).val(); //Get value from select element
+                    if(opval == "sort-old"){
+
+                    }else{
+
+                    }
+                });
+            
+              });
+            
           </script>
     </body>
 </html>
