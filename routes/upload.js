@@ -19,8 +19,8 @@ var uploadN = multer({storage: storage}).single('image_uploads');
 const BUCKET = 'picopy'
 const REGION = 'us-east-2'
 
-const ACCESS_KEY = 'AKIAI7XMHO6HJZGSENCQ'
-const SECRET_KEY = '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'
+const ACCESS_KEY = ''
+const SECRET_KEY = ''
 
 
 	var s3 = new AWS.S3({
