@@ -140,22 +140,25 @@
       <script>
         var photos = JSON.parse(document.getElementById("photo-obj").innerHTML);
         var count = parseInt(document.getElementById("count-obj").innerHTML);
-        
+
         var display = function(option1, timeOption){
           var gallery = '';
-          var filter = 'Filter name';
-          
-          for(var i = 0; i < count; i++)
-          {
-            var path = "/gallery/" + photos[i].filename;
-            gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
-            gallery += '<div class = "filterText">';
-            gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
-            gallery += '<div class ="title">' +photos[i].filters +'</div>';
-            gallery += '</div>'
-            gallery += '</a>';   
+          if(timeOption == "sort-old"){
+            console.log(photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1));
           }
-          console.log("HERE" + gallery);
+          if(timeOption == "sort-new"){
+            console.log(photos.sort((a, b) => (Date.parse(a.date_created) > Date.parse(b.date_created)) ? 1 : -1));
+          }
+          for(var i = 0; i < count; i++)
+            {
+              var path = "/gallery/" + photos[i].filename;
+              gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
+              gallery += '<div class = "filterText">';
+              gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
+              gallery += '<div class ="title">' +photos[i].filters +'</div>';
+              gallery += '</div>'
+              gallery += '</a>';   
+            }
           var gal = document.getElementById("gallery-photos").innerHTML = gallery;
         }
 
@@ -183,11 +186,7 @@
                 });
                 $('#sort-photos-by').change(function() { //jQuery Change Function
                     var opval = $(this).val(); //Get value from select element
-                    if(opval == "sort-old"){
-
-                    }else{
-
-                    }
+                      display(0,opval);
                 });
             
               });

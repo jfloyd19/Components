@@ -123,14 +123,10 @@ ol{
 #filter-row{
   margin-top:50%;
 }
-.filterText .containera {
-  cursor: pointer;
-  height: auto;
+.containera{
   position: relative;
   overflow: hidden;
-  width: auto;
-  text-align:center;
-  }
+}
   .filterText .fadedbox {
   background-color: #ffffff;
   position: static;
@@ -173,3 +169,6 @@ ol{
   transform: translateY(-50px);
   -webkit-transform: translateY(-50px);
   }
+html,body{
+  overflow-x: hidden;
+}
