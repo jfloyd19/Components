@@ -158,13 +158,14 @@ ol{
   -webkit-transform: translateY(30px);
   }
   .filterText .title {
-  font-size: 2.5em;
+  font-size: 1em;
   text-transform: uppercase;
   text-align: center;
   color: rgb(255, 255, 255);
   opacity: 0;
   transition-delay: 0.2s;
   transition-duration: 0.3s;
+  
   }
   .filterText:hover .title,
   .filterText:focus .title {
@@ -172,4 +173,3 @@ ol{
   transform: translateY(-50px);
   -webkit-transform: translateY(-50px);
   }
-  

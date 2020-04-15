@@ -90,16 +90,21 @@
                   <div class="modal-body">
                       <div class="form-group container text-center">
                           <%
+                          //Will only display filters that currently exist in the gallery.
                           var used_filters = ["none"];
+                          //Loop through each photo passed in
                           for(var i = 0; i < photo_count[0].count; i++)
                           {
+                            //Combine them all into one array
                             var currFilt = photo_data[i].filters.split(" ");
                             used_filters = used_filters.concat(currFilt);
                           }
+                          //Filter out the duplicates and the empty strings
                           used_filters = used_filters.filter((value, index) => used_filters.indexOf(value) === index);
                           used_filters = used_filters.filter(Boolean);
 
                           var options = '';
+                          //Create a bunch of options for the dropdown
                           for(var i = 0; i < used_filters.length; i++){
                             options += '<option value="'+used_filters[i]+'">'+used_filters[i]+'</option>'
                           }
@@ -137,10 +142,10 @@
         {
           var path = "/gallery/" + photo_data[i].filename;
           console.log(path); 
-          gallery += '<a class="containera" href =' + photo_data[i].filename + '>';
+          gallery += '<a class="containera" href =' + photo_data[i].filename + ' download>';
           gallery += '<div class = "filterText">';
           gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
-          gallery += '<div class ="title">' +filter +'</div>';
+          gallery += '<div class ="title">' +photo_data[i].filters +'</div>';
           gallery += '</div>'
           gallery += '</a>';   
         }
