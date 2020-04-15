@@ -89,9 +89,24 @@
                   </div>
                   <div class="modal-body">
                       <div class="form-group container text-center">
+                          <%
+                          var used_filters = ["none"];
+                          for(var i = 0; i < photo_count[0].count; i++)
+                          {
+                            var currFilt = photo_data[i].filters.split(" ");
+                            used_filters = used_filters.concat(currFilt);
+                          }
+                          used_filters = used_filters.filter((value, index) => used_filters.indexOf(value) === index);
+                          used_filters = used_filters.filter(Boolean);
+
+                          var options = '';
+                          for(var i = 0; i < used_filters.length; i++){
+                            options += '<option value="'+used_filters[i]+'">'+used_filters[i]+'</option>'
+                          }
+                          %>
+                          
                           <select name="" id="filter-select" class="form-control" style="width: 200px;">
-                              <option value="sort-new">LIST ALL THE FILTERS</option>
-                              <option value="sort-old">MORE FILTERS</option>
+                              <%- options %>
                             </select>
                         </div>
                   </div>
