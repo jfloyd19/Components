@@ -12,7 +12,7 @@
     
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
+<body id="gallery-body">
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
@@ -89,9 +89,29 @@
                   </div>
                   <div class="modal-body">
                       <div class="form-group container text-center">
+                          <%
+                          //Will only display filters that currently exist in the gallery.
+                          var used_filters = ["none"];
+                          //Loop through each photo passed in
+                          for(var i = 0; i < photo_count[0].count; i++)
+                          {
+                            //Combine them all into one array
+                            var currFilt = photo_data[i].filters.split(" ");
+                            used_filters = used_filters.concat(currFilt);
+                          }
+                          //Filter out the duplicates and the empty strings
+                          used_filters = used_filters.filter((value, index) => used_filters.indexOf(value) === index);
+                          used_filters = used_filters.filter(Boolean);
+
+                          var options = '';
+                          //Create a bunch of options for the dropdown
+                          for(var i = 0; i < used_filters.length; i++){
+                            options += '<option value="'+used_filters[i]+'">'+used_filters[i]+'</option>'
+                          }
+                          %>
+                          
                           <select name="" id="filter-select" class="form-control" style="width: 200px;">
-                              <option value="sort-new">LIST ALL THE FILTERS</option>
-                              <option value="sort-old">MORE FILTERS</option>
+                              <%- options %>
                             </select>
                         </div>
                   </div>
@@ -115,24 +135,34 @@
         and I will amend the photo database so that it holds a string containing all of the filters applied to it. 
         Let's not add a login button to this page though, complicates things a bit
       -->
-      <%
-        var gallery = '';
-        var filter = 'Filter name';
-        for(var i = 0; i < photo_count[0].count; i++)
-        {
-          var path = "/gallery/" + photo_data[i].filename;
-          console.log(path); 
-          gallery += '<a href =' + photo_data[i].filename + '>';
-          gallery += '<div class = "filterText">';
-          gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
-          gallery += '<div class ="title">' +filter +'</div>';
-          gallery += '</div>'
-          gallery += '</a>';   
+      <div style="display:none" id="count-obj"><%- photo_count[0].count %></div>
+      <div style="display:none" id="photo-obj"><%- JSON.stringify(photo_data) %></div>
+      <script>
+        var photos = JSON.parse(document.getElementById("photo-obj").innerHTML);
+        var count = parseInt(document.getElementById("count-obj").innerHTML);
+
+        var display = function(option1, timeOption){
+          var gallery = '';
+          if(timeOption == "sort-old"){
+            console.log(photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1));
+          }
+          if(timeOption == "sort-new"){
+            console.log(photos.sort((a, b) => (Date.parse(a.date_created) > Date.parse(b.date_created)) ? 1 : -1));
+          }
+          for(var i = 0; i < count; i++)
+            {
+              var path = "/gallery/" + photos[i].filename;
+              gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
+              gallery += '<div class = "filterText">';
+              gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
+              gallery += '<div class ="title">' +photos[i].filters +'</div>';
+              gallery += '</div>'
+              gallery += '</a>';   
+            }
+          var gal = document.getElementById("gallery-photos").innerHTML = gallery;
         }
-      %>
 
-
-      <%- gallery %> 
+      </script>
       <!-- <div class="filterText">
         <img src="/gallery/1.jpg" class="filterText"/>
         <div class="fadedbox">
@@ -145,6 +175,7 @@
       
           <script>
             $(document).ready(function(){ //Make script DOM ready
+              display(0,0);
                 $('#view-photos-by').change(function() { //jQuery Change Function
                     var opval = $(this).val(); //Get value from select element
                     if(opval=="photos-by-user"){ //Compare it and if true
@@ -153,7 +184,13 @@
                       $('#getFilterModal').modal("show");
                     }
                 });
-            });
+                $('#sort-photos-by').change(function() { //jQuery Change Function
+                    var opval = $(this).val(); //Get value from select element
+                      display(0,opval);
+                });
+            
+              });
+            
           </script>
     </body>
 </html>
