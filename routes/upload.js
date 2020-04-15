@@ -18,16 +18,16 @@ var uploadN = multer({storage: storage}).single('image_uploads');
 
 const BUCKET = 'picopy'
 const REGION = 'us-east-2'
-const ACCESS_KEY = ''
-const SECRET_KEY = ''
 
-AWS.config.update({
+const ACCESS_KEY = 'AKIAI7XMHO6HJZGSENCQ'
+const SECRET_KEY = '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'
+
+
+	var s3 = new AWS.S3({
 	  accessKeyId: ACCESS_KEY,
 	  secretAccessKey: SECRET_KEY,
 	  region: REGION
 	});
-
-	var s3 = new AWS.S3();
 
 router.post('/single', function(req, res, err) {
 uploadN(req, res, (err) =>{
@@ -35,20 +35,57 @@ uploadN(req, res, (err) =>{
 		res.render('index', {msg: err});
 	}
 	else{
+
 		console.log(req.file);
 		const localImage = String(req.file.path);
 		console.log(localImage);
 		const imageRemoteName = String(timestamp + extname);
-		console.log(imageRemoteName);
+		const canvasRemoteName = String(timestamp+ "canvas" + extname);
+		console.log("Key: " + imageRemoteName);
 	s3.putObject({
 	  Bucket: BUCKET,
 	  Body: fs.readFileSync(localImage),
 	  Key: imageRemoteName
-	})
+	}, function(err, data){
+	if(err){console.log('file upload failed')}
+	console.log('file uploaded successfully. ${data.Location}');
+	});
+
+var writeFile = String("./public/currentimage/canvas" + extname);
+var base64Data = req.body.image_canvas.replace(/^data:image\/png;base64,/, "");
+fs.writeFileSync(writeFile, base64Data, 'base64', function(err){
+	console.log(err);
+});
+
+
+s3.putObject({
+	  Bucket: BUCKET,
+	  Body: fs.readFileSync(writeFile),
+	  Key: canvasRemoteName
+	}, function(err, data){
+	if(err){console.log('file upload failed')}
+	console.log('file uploaded successfully. ${data.Location}');
+	});
 	  
-	res.render('index', {title: 'Picopy', user: req.session.user});
+	console.log(req.session.user.user_ids);
+console.log(req.body.Private.checked);
+console.log(req.body.imgString);
+res.render('index', {title: 'Picopy', user: req.session.user});
+var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_ids}', '${canvasRemoteName}', '${req.body.imgString}', '${req.body.Private.checked}');`;
+	  db.any(query)
+        .then(function () {
+          
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            console.log(err);
+        }) 
 	}
 	});
+
+
+
 
   });
   
@@ -56,6 +93,7 @@ uploadN(req, res, (err) =>{
 
 
 module.exports = router;
+
 
 
 
