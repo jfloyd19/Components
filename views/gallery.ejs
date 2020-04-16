@@ -91,7 +91,7 @@
                       <div class="form-group container text-center">
                           <%
                           //Will only display filters that currently exist in the gallery.
-                          var used_filters = ["none"];
+                          var used_filters = ["Any", "No filter"];
                           //Loop through each photo passed in
                           for(var i = 0; i < photo_count[0].count; i++)
                           {
@@ -116,7 +116,7 @@
                         </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="sortByUser()">View Photos With Filter</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="sortByFilter()">View Photos With Filter</button>
                   </div>
                 </div>
               </div>
@@ -138,18 +138,58 @@
       <div style="display:none" id="count-obj"><%- photo_count[0].count %></div>
       <div style="display:none" id="photo-obj"><%- JSON.stringify(photo_data) %></div>
       <script>
-        var photos = JSON.parse(document.getElementById("photo-obj").innerHTML);
+        var prePhotos = JSON.parse(document.getElementById("photo-obj").innerHTML);
+        
         var count = parseInt(document.getElementById("count-obj").innerHTML);
-
+        var current = ["sort-new",'0'];
         var display = function(option1, timeOption){
           var gallery = '';
+          var photos = [];
+          //Means it is a filter query
+          if(option1[0] == 1){
+            
+            var lookingFor = option1.substring(1);
+            if(lookingFor == "none"){
+              photos = prePhotos;
+            }else if(lookingFor == "No filter"){
+              if(prePhotos[x].filters == ""){
+                  photos.push(prePhotos[x]);
+              }
+            }else{
+              for(var x = 0; x < prePhotos.length; x++){
+
+                if(prePhotos[x].filters.includes(lookingFor)){
+                  photos.push(prePhotos[x]);
+                }
+              }
+            }
+          }
+          //Means it is a user query
+          else if(option1[0] == 2){
+            var lookingFor = option1.substring(1);
+            for(var x = 0; x < prePhotos.length; x++){
+              found = false;
+              if(prePhotos[x].username.toLowerCase() == lookingFor){
+                photos.push(prePhotos[x]);
+                found = true;
+              }
+              if(!found){
+                alert("User not found.");
+                photos = prePhotos;
+                return;
+              }
+            }
+          }else if(option1 == 0){//Otherwise leave the array unfiltered
+            photos = prePhotos;
+          }
+          
           if(timeOption == "sort-old"){
-            console.log(photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1));
+            photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1);
           }
           if(timeOption == "sort-new"){
-            console.log(photos.sort((a, b) => (Date.parse(a.date_created) > Date.parse(b.date_created)) ? 1 : -1));
+            photos.sort((a, b) => (Date.parse(a.date_created) > Date.parse(b.date_created)) ? 1 : -1);
           }
-          for(var i = 0; i < count; i++)
+          for(var i = 0; i < photos.length; i++)
             {
               var path = "/gallery/" + photos[i].filename;
               gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
@@ -186,11 +226,22 @@
                 });
                 $('#sort-photos-by').change(function() { //jQuery Change Function
                     var opval = $(this).val(); //Get value from select element
-                      display(0,opval);
+                      current[1] = opval;
+                      display(current[0],current[1]);
                 });
             
               });
-            
+              var sortByFilter = function(){
+                var f = $("#filter-select").val();
+                  current[0] = "1" + f;
+                  display(current[0],current[1]);
+              }
+              var sortByUser = function(){
+                var u = $("#usernameForm").val();
+                current[0] = "2" + u.toLowerCase();
+                console.log(current);
+                display(current[0],current[1]);
+              }
           </script>
     </body>
 </html>
