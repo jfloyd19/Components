@@ -26,8 +26,8 @@
       <li class="nav-item nav-link">
           <select name="" id="view-photos-by" class="form-control" style="">
               <option value="all-photos">All Photos</option>
-              <%- user == null ? "" : '<option value="my-photos">My Public Photos</option>' %>
-              <option value="photos-by-user">Photos By User</option>
+              <%- user == null ? "" : '<option value="my-photos" id="my-photos-select">My Public Photos</option>' %>
+              <option value="photos-by-user" id="photos-by-user-select">Photos By User</option>
               <option value="photos-by-filter">Photos By Filter</option>
             </select>
       </li>
@@ -45,7 +45,7 @@
         </li>
       <li class="nav-item">
         <!-- NEED TO DISABLE THIS IF NOT LOGGED IN -->
-        <a class="nav-link" onclick="viewPrivate()"><%- user == null ? 'Log in to view private photos' : 'My Private Photos' %></a>
+        <%- user == null ? '<a class="nav-link">Log in to view private photos</a>' : '<a class="nav-link" id="viewPrivateToggle" onclick="viewPrivate()">My Private Photos</a>' %>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right" style="color:white">
@@ -78,7 +78,7 @@
 
           <div class="modal fade" id="getFilterModal" tabindex="-1" role="dialog" aria-labelledby="getFilterModalTitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+                <div class="modal-content">2
                   <div class="modal-header">
                     <!-- CAN WE CENTER THIS? -->
                     <h5 class="modal-title" id="getFilterModalLongTitle">Choose a filter to sort by</h5>
@@ -138,27 +138,46 @@
       <div style="display:none" id="photo-obj"><%- JSON.stringify(photo_data) %></div>
       <script>
         var prePhotos = JSON.parse(document.getElementById("photo-obj").innerHTML);
-        
+        var publicPhotos = [];
+        var privatePhotos = [];
+        var viewingPrivate = false;
+        //Seperate the public and private photos
+        for(var i = 0; i < prePhotos.length; i++){
+          if(prePhotos[i].private == true){
+            privatePhotos.push(prePhotos[i]);
+          }else{
+            publicPhotos.push(prePhotos[i]);
+          }
+        }
+        console.log("Initial Private Photos", privatePhotos);
+        console.log("Initial Public Photos", publicPhotos);
         var count = parseInt(document.getElementById("count-obj").innerHTML);
-        var current = ["sort-new",'0'];
-        var display = function(option1, timeOption){
+        var current = ["0","sort-new"];
+
+        var display = function(){
+          option1 = current[0];
+          timeOption = current[1];
           var gallery = '';
           var photos = [];
+          var listToView = viewingPrivate ? privatePhotos : publicPhotos;
+          console.log("In function public", publicPhotos);
+          console.log("In function private", privatePhotos);
+          console.log("List to view", listToView);
           //Means it is a filter query
           if(option1[0] == 1){
             
             var lookingFor = option1.substring(1);
             if(lookingFor == "none"){
-              photos = prePhotos;
+              photos = listToView;
             }else if(lookingFor == "No filter"){
-              if(prePhotos[x].filters == ""){
-                  photos.push(prePhotos[x]);
+              if(listToView[x].filters == ""){
+                  photos.push(listToView[x]);
               }
             }else{
-              for(var x = 0; x < prePhotos.length; x++){
+              for(var x = 0; x < listToView.length; x++){
 
-                if(prePhotos[x].filters.includes(lookingFor)){
-                  photos.push(prePhotos[x]);
+                if(listToView[x].filters.includes(lookingFor)){
+                  photos.push(listToView[x]);
                 }
               }
             }
@@ -166,22 +185,22 @@
           //Means it is a user query
           else if(option1[0] == 2){
             var lookingFor = option1.substring(1);
-            for(var x = 0; x < prePhotos.length; x++){
+            for(var x = 0; x < listToView.length; x++){
               found = false;
-              if(prePhotos[x].username.toLowerCase() == lookingFor){
-                photos.push(prePhotos[x]);
+              if(listToView[x].username.toLowerCase() == lookingFor){
+                photos.push(listToView[x]);
                 found = true;
               }
               if(!found){
                 alert("User not found.");
-                photos = prePhotos;
+                photos = listToView;
                 return;
               }
             }
           }else if(option1 == 0){//Otherwise leave the array unfiltered
-            photos = prePhotos;
+            photos = listToView;
           }
-          
+          console.log(photos);
           if(timeOption == "sort-old"){
             photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1);
           }
@@ -221,25 +240,36 @@
                         $('#getUserModal').modal("show"); //Open Modal
                     }else if(opval =='photos-by-filter'){
                       $('#getFilterModal').modal("show");
+                    }else if(opval =='all-photos'){
+                      current[0] = "0";
+                      display();
                     }
                 });
                 $('#sort-photos-by').change(function() { //jQuery Change Function
                     var opval = $(this).val(); //Get value from select element
                       current[1] = opval;
-                      display(current[0],current[1]);
+                      display();
                 });
             
               });
               var sortByFilter = function(){
                 var f = $("#filter-select").val();
                   current[0] = "1" + f;
-                  display(current[0],current[1]);
+                  display();
               }
               var sortByUser = function(){
                 var u = $("#usernameForm").val();
                 current[0] = "2" + u.toLowerCase();
                 console.log(current);
-                display(current[0],current[1]);
+                display();
+              }
+
+              var viewPrivate = function(){
+                viewingPrivate = !viewingPrivate;
+                document.getElementById("viewPrivateToggle").innerHTML = !viewingPrivate ? "My Private Photos" : "Click to view public photos";
+                $("#my-photos-select").css("display", !viewingPrivate ? "block" : "none");
+                $("#photos-by-user-select").css("display", !viewingPrivate ? "block" : "none");
+                display();
               }
           </script>
     </body>
