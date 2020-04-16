@@ -123,17 +123,7 @@
 
 
     <div onclick="loadPhotos();" id="gallery-photos">
-      <!-- 
-        Basically what needs to be done in the gallery, obviously implement whatever else you feel is necessary:
-        1) "View my photos" which queries only the user who is logged in's photos. 
-        2) Sort by date
-        3) Ability to remove your own photos from the gallery?
-        4) Hover -> more info on the photo
-
-        I will add a user object that will be passed in (though it won't always contain data i.e. if a user isn't logged in)
-        and I will amend the photo database so that it holds a string containing all of the filters applied to it. 
-        Let's not add a login button to this page though, complicates things a bit
-      -->
+      <!--  -->
       <div style="display:none" id="count-obj"><%- photo_count[0].count %></div>
       <div style="display:none" id="photo-obj"><%- JSON.stringify(photo_data) %></div>
       <script>
@@ -149,64 +139,75 @@
             publicPhotos.push(prePhotos[i]);
           }
         }
-        console.log("Initial Private Photos", privatePhotos);
-        console.log("Initial Public Photos", publicPhotos);
         var count = parseInt(document.getElementById("count-obj").innerHTML);
+
+        //Options for sorting the photos
         var current = ["0","sort-new"];
 
+        //Called to populate the gallery with photos according to options
         var display = function(){
           option1 = current[0];
           timeOption = current[1];
           var gallery = '';
           var photos = [];
+          //Select the list to sort and view depending on if the user is viewing private photos
           var listToView = viewingPrivate ? privatePhotos : publicPhotos;
-          console.log("In function public", publicPhotos);
-          console.log("In function private", privatePhotos);
-          console.log("List to view", listToView);
+
           //Means it is a filter query
           if(option1[0] == 1){
-            
+            //Get just the filter from the string
             var lookingFor = option1.substring(1);
+            //All photos
             if(lookingFor == "none"){
               photos = listToView;
+            //Photos with an empty fitler string
             }else if(lookingFor == "No filter"){
               if(listToView[x].filters == ""){
                   photos.push(listToView[x]);
               }
+            //Find photos with a filter string that includes filter you want
             }else{
               for(var x = 0; x < listToView.length; x++){
-
                 if(listToView[x].filters.includes(lookingFor)){
                   photos.push(listToView[x]);
                 }
               }
             }
           }
+
           //Means it is a user query
           else if(option1[0] == 2){
+            //Get just the user from the string
             var lookingFor = option1.substring(1);
+            //Sort through all the photos to see if one with the username is found
             for(var x = 0; x < listToView.length; x++){
               found = false;
+              //Push photos to list if username matches
               if(listToView[x].username.toLowerCase() == lookingFor){
                 photos.push(listToView[x]);
                 found = true;
               }
+              //If it's not found, return so it doesn't glitch
               if(!found){
                 alert("User not found.");
                 photos = listToView;
                 return;
               }
             }
+          //If no sort was selected/"All photos"
           }else if(option1 == 0){//Otherwise leave the array unfiltered
             photos = listToView;
           }
-          console.log(photos);
+
+          //Now that the array is filtered, sort by time added
           if(timeOption == "sort-old"){
             photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1);
           }
           if(timeOption == "sort-new"){
             photos.sort((a, b) => (Date.parse(a.date_created) > Date.parse(b.date_created)) ? 1 : -1);
           }
+
+          //Add all photos from sorted and filtered array to the gallery-photos div
           for(var i = 0; i < photos.length; i++)
             {
               var path = "/gallery/" + photos[i].filename;
@@ -219,58 +220,56 @@
             }
           var gal = document.getElementById("gallery-photos").innerHTML = gallery;
         }
-
       </script>
-      <!-- <div class="filterText">
-        <img src="/gallery/1.jpg" class="filterText"/>
-        <div class="fadedbox">
-          <div class="title text">Issa test</div>
-        </div>
-      </div>
-    </div> -->
-
-
-      
-          <script>
-            $(document).ready(function(){ //Make script DOM ready
-              display(0,0);
-                $('#view-photos-by').change(function() { //jQuery Change Function
-                    var opval = $(this).val(); //Get value from select element
-                    if(opval=="photos-by-user"){ //Compare it and if true
-                        $('#getUserModal').modal("show"); //Open Modal
-                    }else if(opval =='photos-by-filter'){
-                      $('#getFilterModal').modal("show");
-                    }else if(opval =='all-photos'){
-                      current[0] = "0";
-                      display();
-                    }
-                });
-                $('#sort-photos-by').change(function() { //jQuery Change Function
-                    var opval = $(this).val(); //Get value from select element
-                      current[1] = opval;
-                      display();
-                });
-            
-              });
-              var sortByFilter = function(){
-                var f = $("#filter-select").val();
-                  current[0] = "1" + f;
+        <script>
+          $(document).ready(function(){ //Make script DOM ready
+          //Display with default options on load
+            display();
+            $('#view-photos-by').change(function() { //jQuery Change Function
+                var opval = $(this).val(); //Get value from select element
+                if(opval=="photos-by-user"){ //Compare it and if true
+                    $('#getUserModal').modal("show"); //Open Modal
+                }else if(opval =='photos-by-filter'){
+                  $('#getFilterModal').modal("show");
+                }else if(opval =='all-photos'){
+                  //Set current back to default filtering
+                  current[0] = "0";
                   display();
-              }
-              var sortByUser = function(){
-                var u = $("#usernameForm").val();
-                current[0] = "2" + u.toLowerCase();
-                console.log(current);
+                }else if(opval =='my-photos'){
+                  //Set user to currently logged in user
+                  $(current[0] = "2" + username);
+                  display();
+                }
+            });
+              $('#sort-photos-by').change(function() { //jQuery Change Function
+                  var opval = $(this).val(); //Get value from select element
+                    current[1] = opval;
+                    display();
+              });
+          
+            });
+            //Called by the filter modal
+            var sortByFilter = function(){
+              var f = $("#filter-select").val();
+                current[0] = "1" + f;
                 display();
-              }
-
-              var viewPrivate = function(){
-                viewingPrivate = !viewingPrivate;
-                document.getElementById("viewPrivateToggle").innerHTML = !viewingPrivate ? "My Private Photos" : "Click to view public photos";
-                $("#my-photos-select").css("display", !viewingPrivate ? "block" : "none");
-                $("#photos-by-user-select").css("display", !viewingPrivate ? "block" : "none");
-                display();
-              }
-          </script>
+            }
+            //Called by the user modal
+            var sortByUser = function(){
+              var u = $("#usernameForm").val();
+              current[0] = "2" + u.toLowerCase();
+              display();
+            }
+            //Called by clicking "view private"
+            //Toggle options that don't make any sense
+            //    if you are viewing private, don't show options to view photos by user or public photos
+            var viewPrivate = function(){
+              viewingPrivate = !viewingPrivate;
+              document.getElementById("viewPrivateToggle").innerHTML = !viewingPrivate ? "My Private Photos" : "Click to view public photos";
+              $("#my-photos-select").css("display", !viewingPrivate ? "block" : "none");
+              $("#photos-by-user-select").css("display", !viewingPrivate ? "block" : "none");
+              display();
+            }
+        </script>
     </body>
 </html>
