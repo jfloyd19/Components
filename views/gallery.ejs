@@ -26,8 +26,7 @@
       <li class="nav-item nav-link">
           <select name="" id="view-photos-by" class="form-control" style="">
               <option value="all-photos">All Photos</option>
-              <!-- NEED TO DISABLE THIS IF NOT LOGGED IN -->
-              <option value="my-photos">My Public Photos</option>
+              <%- user == null ? "" : '<option value="my-photos">My Public Photos</option>' %>
               <option value="photos-by-user">Photos By User</option>
               <option value="photos-by-filter">Photos By Filter</option>
             </select>
@@ -46,7 +45,7 @@
         </li>
       <li class="nav-item">
         <!-- NEED TO DISABLE THIS IF NOT LOGGED IN -->
-        <a class="nav-link">My Private Photos</a>
+        <a class="nav-link" onclick="viewPrivate()"><%- user == null ? 'Log in to view private photos' : 'My Private Photos' %></a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right" style="color:white">
