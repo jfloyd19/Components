@@ -154,7 +154,7 @@ ol{
   -webkit-transform: translateY(30px);
   }
   .filterText .title {
-  font-size: 1em;
+  font-size: 0.5em;
   text-transform: uppercase;
   text-align: center;
   color: rgb(255, 255, 255);
@@ -163,6 +163,7 @@ ol{
   transition-duration: 0.3s;
   
   }
+  
   .filterText:hover .title,
   .filterText:focus .title {
   opacity: 1;
@@ -179,4 +180,11 @@ html,body{
   margin-bottom:2.5%;
   position: absolute;
 }
+.title{position:relative;}
 
+.list_container {
+  direction: rtl;
+  overflow:auto;
+}
+
+.list_container > * { direction: ltr; }
