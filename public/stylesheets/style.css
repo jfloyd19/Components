@@ -45,7 +45,10 @@ select{
 #filter-select{
   background-color:white !important;
 }
-
+#filter-row{
+  height:50%;
+  overflow-y: scroll;
+}
 #main{
   height:100% !important;
   margin:0;
@@ -120,9 +123,6 @@ select{
 ol{
   padding:0;
 }
-#filter-row{
-  margin-top:50%;
-}
 .containera{
   position: relative;
   overflow: hidden;
@@ -179,3 +179,4 @@ html,body{
   margin-bottom:2.5%;
   position: absolute;
 }
+
