@@ -14,9 +14,7 @@ $(document).ready(function(){
 
 
     input.addEventListener('change', updateImageDisplay);
-    console.log("script");
     function updateImageDisplay() {
-    console.log("called update image display");
 
     while(preview.firstChild) {
       preview.removeChild(preview.firstChild);
@@ -42,6 +40,7 @@ $(document).ready(function(){
           image.src = URL.createObjectURL(file);
       imageSource = image.src;
           listItem.appendChild(image);
+      
         } else {
           para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
           listItem.appendChild(para);
@@ -50,13 +49,106 @@ $(document).ready(function(){
         list.appendChild(listItem);
         list.style.textAlign="center";
         list.style.listStyleType = "none";
-        var bigger = $("#curr-pic").prop("width") > $("#curr-pic").prop("height") ? "width" : "height";
-        $("#curr-pic").prop(bigger, bigger == "width" ? $("#prev").width() : $("#prev").height());
-        //para.classList.add("display-4");
+        $("#curr-pic")
+        .on('load', function() {
+          var bigger = $("#curr-pic").prop("width") > $("#curr-pic").prop("height") ? "width" : "height";
+          $("#curr-pic").prop(bigger, bigger == "width" ? $("#prev").width() : $("#prev").height());
+          console.log(bigger);
+          switchToCanvas($("#curr-pic"));
+        });
       }
     }
   }
+  var c;
+  var ct;
+  function switchToCanvas(x){
+    console.log($("#curr-pic").width()) 
+      $(".preview").append("<canvas id='image-canvas'></canvas>");
+      $("#image-canvas").prop("width", x.width());
+      $("#image-canvas").prop("height", x.height());
+      c = document.getElementById('image-canvas');
+      ct = c.getContext("2d");
 
+      //Load the image and set the canvas dimensions to be the same as the image
+      var preview_image = document.getElementById('curr-pic');
+      //Apply the filters and the image to the canvas
+      ct.filter = filter_string;
+      ct.drawImage(preview_image, 0, 0, x.prop("width"),x.prop("height"));
+      $("#curr-pic").hide();
+      if(document.getElementById("binarize").checked == true){
+        binarize(1.5);
+      }
+      if(document.getElementById("edge").checked == true){
+        edge();
+      }
+      if(document.getElementById("emboss").checked==true){
+        emboss();
+      }
+      if(document.getElementById("flip").checked == true){
+        flip();
+      }
+      if(document.getElementById("gamma").checked == true){
+        gamma(4);
+      }
+      if(document.getElementById("mosaic").checked == true){
+        mosaic(10);
+      }
+      if(document.getElementById("posterize").checked == true){
+        posterize(3.5);
+      }
+      if(document.getElementById("sharpen").checked == true){
+        sharpen(5);
+      }
+      if(document.getElementById("solarize").checked == true){
+        solarize();
+      }
+  }
+  
+  function binarize(l){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Binarize(imageData, l);
+    ct.putImageData(filtered, 0,0)
+  }
+  function edge(){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Edge(imageData);
+    ct.putImageData(filtered, 0,0)
+  }
+  function emboss(){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Emboss(imageData);
+    ct.putImageData(filtered, 0,0)
+  }
+  function flip(){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Flip(imageData);
+    ct.putImageData(filtered, 0,0)
+  }
+  function gamma(level){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Gamma(imageData, level);
+    ct.putImageData(filtered, 0,0)
+  }
+  function mosaic(size){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Mosaic(imageData, size);
+    ct.putImageData(filtered, 0,0)
+  }
+  function posterize(l){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Posterize(imageData, l);
+    ct.putImageData(filtered, 0,0)
+  }
+  function sharpen(f){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Sharpen(imageData, f);
+    ct.putImageData(filtered, 0,0)
+  }
+  function solarize(){
+    var imageData = ct.getImageData(0,0,c.width,c.height);
+    var filtered = ImageFilters.Solarize(imageData);
+    ct.putImageData(filtered, 0,0)
+  }
   function toggleFilter(filter_name, id){
     if(document.getElementById(id).checked == false){
       filter_string = filter_string.replace(filter_name,"");
@@ -99,6 +191,7 @@ $(document).ready(function(){
   function sepiafun1() {toggleFilter(" sepia(33%)", "sepia1");}
   function sepiafun2() {toggleFilter(" sepia(66%)", "sepia2");}
   function sepiafun3() {toggleFilter(" sepia(100%)", "sepia3");}
+  function binarizefun(){ updateImageDisplay()}
 
   //Used to store the images with the filters into the DB
   var dataURL;
@@ -118,7 +211,7 @@ $(document).ready(function(){
   }
 
   function submit_canvas(){
-    convertToCanvasThenImg();
+    dataURL = c.toDataURL();
     $.ajax({
       type: "POST",
       url: "/single",
