@@ -78,7 +78,7 @@ $(document).ready(function(){
   function darkerfun()  {toggleFilter(" brightness(50%)", "darker");}
   function lighterfun() {toggleFilter(" brightness(150%)", "lighter");}
   function lowcontrastfun() {toggleFilter(" contrast(75%)","lowcontrast");}
-  function highcontrastfun() {toggleFilter(" contrast(125%)");}
+  function highcontrastfun() {toggleFilter(" contrast(125%)", "highcontrast");}
   function dropshadowfun() {toggleFilter( " drop-shadow(8px 8px 10px gray)","dropshadow");}
   function huerotate90fun() {toggleFilter(" hue-rotate(90deg)", "huerotate90");}
   function huerotate180fun() {toggleFilter(" hue-rotate(180deg)", "huerotate180");}
@@ -88,6 +88,7 @@ $(document).ready(function(){
   function sepiafun() {toggleFilter(" sepia(50%)", "sepia");}
 
   //Used to store the images with the filters into the DB
+  var dataURL;
   function convertToCanvasThenImg(){
     //Set up the canvas element
     var canvas = document.getElementById('myCanvas');
@@ -100,9 +101,22 @@ $(document).ready(function(){
     ctx.filter = filter_string;
     ctx.drawImage(preview_image, 0, 0);
     //Convert the canvas to an easily transferable "string" of data
-    var dataURL = canvas.toDataURL();
-    document.getElementById('final_img').src = dataURL;
-    document.getElementById('image_canvas').value = dataURL;
+    dataURL = canvas.toDataURL();
+  }
+
+  function submit_canvas(){
+    convertToCanvasThenImg();
+    $.ajax({
+      type: "POST",
+      url: "/single",
+      data: { 
+         image_data: dataURL,
+         Private: $("#Private").is(":checked"),
+         filter_s: filter_string 
+      }
+    }).done(function(o) {
+      console.log('saved'); 
+    });
   }
     const fileTypes = [
         'image/jpeg',

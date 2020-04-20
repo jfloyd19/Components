@@ -6,15 +6,7 @@ var AWS = require('aws-sdk')
 const fs = require('fs')
 var multer = require('multer');
 let extname = ''
-var storage = multer.diskStorage({
-	destination: './public/currentimage/',
-	filename: function(req, file, cb) {
-		extname =  path.extname(file.originalname)
-		cb(null, 'currentimage' + extname);
-	}
-});
-var uploadN = multer({storage: storage}).single('image_uploads');
-
+const url = require('url');
 const BUCKET = 'picopyimg'
 const REGION = 'us-east-2' 
 
@@ -28,83 +20,86 @@ const SECRET_KEY = ''
 	  region: REGION
 	});
 
-router.post('/single', function(req, res, err) {
-uploadN(req, res, (err) =>{
-	if(err){
-		res.render('index', {msg: err});
-	}
-	else{
-		var timestamp = new Date().getTime();
-		console.log(req.file);
-		const localImage = String(req.file.path);
-		console.log(localImage);
-		const imageRemoteName = String(timestamp + extname);
-		const canvasRemoteName = String(timestamp+ "canvas" + extname);
-		console.log("Key: " + imageRemoteName);
-	s3.putObject({
-	  Bucket: BUCKET,
-	  Body: fs.readFileSync(localImage),
-	  Key: imageRemoteName
-	}, function(err, data){
-	if(err){console.log('file upload failed')}
-	console.log('file uploaded successfully.');
-	});
 
-var writeFile = String("./public/currentimage/canvas" + extname);
-var base64Data = req.body.image_canvas.replace(/^data:image\/png;base64,/, "");
-fs.writeFileSync(writeFile, base64Data, 'base64', function(err){
-	console.log(err);
+router.post('/single', function(req, response, err) {
+	var u;
+	var image_data = req.body.image_data;
+	var base64Data = image_data.replace(/^data:image\/png;base64,/, "");
+	const localImage = path.resolve("out.png");
+	fs.writeFileSync(localImage, base64Data, 'base64', function(err) {
+		console.log(err);
+	});
+	const imageRemoteName = String(new Date().getTime() + ".png");
+	s3.putObject({
+		Bucket: BUCKET,
+		Body: fs.readFileSync(localImage),
+		Key: imageRemoteName
+	  }).promise()
+	  .then(response => {
+		  u = (s3.getSignedUrl('getObject', { Bucket: BUCKET, Key: imageRemoteName }).split("?").shift());
+
+		var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${u}', '${req.body.filter_s}', '${req.body.Private}');`;
+		db.any(query)
+			.then(function () {
+				console.log("DB Updated successfully");
+			})
+			.catch(function (err) {
+				console.log(err);
+			}) 
+	  })
+	  .catch(err => {
+		console.log('failed:', err)
+	  })
 });
 
 
-s3.putObject({
-	  Bucket: BUCKET,
-	  Body: fs.readFileSync(writeFile),
-	  Key: canvasRemoteName
-	}, function(err, data){
-	if(err){console.log('file upload failed')}
-	console.log('file uploaded successfully.');
-	});
-	url = 'https://picopyimg.s3.us-east-2.amazonaws.com/' + canvasRemoteName
-url2 = 'https://picopyimg.s3.us-east-2.amazonaws.com/' + imageRemoteName
-console.log(url);
-	  object = req.body.Private ? true : false;
-	console.log(req.session.user.user_id);
-console.log(object);
-console.log(req.body.imgString);
-//insert photo data into table
-if(req.body.imgString != ""){
-var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${url}', '${req.body.imgString}', '${object}');`;
-	  db.any(query)
-        .then(function () {
-	console.log("DB Updated successfully");
-          res.render('index', {title: 'Picopy', user: req.session.user});
-        })
-        .catch(function (err) {
-            // display error message in case an error
-request.flash('error', err);
-            console.log(err);
-        }) 
-}else{
-	var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${url2}', '${req.body.imgString}', '${object}');`;
-	  db.any(query)
-        .then(function () {
-	console.log("DB Updated successfully");
-          res.render('index', {title: 'Picopy', user: req.session.user});
-        })
-        .catch(function (err) {
-            // display error message in case an error
-request.flash('error', err);
-            console.log(err);
-        }) 
-	
-}
-}
-	});
+// s3.putObject({
+// 	  Bucket: BUCKET,
+// 	  Body: fs.readFileSync(writeFile),
+// 	  Key: canvasRemoteName
+// 	}, function(err, data){
+// 	if(err){console.log('file upload failed')}else{
+// 		console.log('file uploaded successfully.');}
+// 	});
+
+// 	url = 'https://picopyimg.s3.us-east-2.amazonaws.com/' + canvasRemoteName;
+// 	url2 = 'https://picopyimg.s3.us-east-2.amazonaws.com/' + imageRemoteName;
+// 	console.log(url);
+// 	object = req.body.Private ? true : false;
+// 	console.log(req.session.user.user_id);
+// 	console.log(object);
+// 	console.log(req.body.imgString);
+// 	//insert photo data into table
+// 	if(req.body.imgString != ""){
+// 	var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${url}', '${req.body.imgString}', '${object}');`;
+// 		db.any(query)
+// 			.then(function () {
+// 		console.log("DB Updated successfully");
+// 			res.render('index', {title: 'Picopy', user: req.session.user});
+// 			})
+// 			.catch(function (err) {
+// 				// display error message in case an error
+// 	request.flash('error', err);
+// 				console.log(err);
+// 			}) 
+// 	}else{
+// 		var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${url2}', '${req.body.imgString}', '${object}');`;
+// 		db.any(query)
+// 			.then(function () {
+// 		console.log("DB Updated successfully");
+// 			res.render('index', {title: 'Picopy', user: req.session.user});
+// 			})
+// 			.catch(function (err) {
+// 				// display error message in case an error
+// 	request.flash('error', err);
+// 				console.log(err);
+// 			}) 
+		
+// 	}
+// 	}
+// 		});
 
 
-
-  });
   
 
 

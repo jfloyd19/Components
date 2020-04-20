@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    
+  <script src="/javascripts/gallery.js"></script>
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body id="gallery-body">
@@ -120,10 +120,16 @@
                 </div>
               </div>
             </div>
-
+            <div id="delay-notif">
+              <p>If you have just uploaded, it may take a minute for your photo to appear in the gallery.</p>
+              <p>Refresh if you don't see it.</p>
+            </div>
 
     <div onclick="loadPhotos();" id="gallery-photos">
       <!--  -->
+      <div id="fb-root"></div>
+      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0">
+      </script>
       <div style="display:none" id="count-obj"><%- photo_count[0].count %></div>
       <div style="display:none" id="photo-obj"><%- JSON.stringify(photo_data) %></div>
       <script>
@@ -201,10 +207,10 @@
 
           //Now that the array is filtered, sort by time added
           if(timeOption == "sort-old"){
-            photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1);
+            photos.sort((a, b) => (Date.parse(a.date_created) > Date.parse(b.date_created)) ? 1 : -1);
           }
           if(timeOption == "sort-new"){
-            photos.sort((a, b) => (Date.parse(a.date_created) > Date.parse(b.date_created)) ? 1 : -1);
+            photos.sort((a, b) => (Date.parse(a.date_created) < Date.parse(b.date_created)) ? 1 : -1);
           }
 
           //Add all photos from sorted and filtered array to the gallery-photos div
@@ -212,6 +218,10 @@
             {
               var path = photos[i].filename;
               gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
+              gallery += '<div class="fb-share-button" data-href="https://d17fnq9dkz9hgj.cloudfront.net/breed-uploads/2018/09/dog-landing-hero-lg.jpg?bust=1536935129&width=1080" data-layout="button" data-size="large">';
+              gallery += '<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F' + photos[i].filename + '%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share';
+              gallery += '</a>';
+              gallery += '</div>';
               gallery += '<div class = "filterText">';
               gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
               gallery += '<div class ="title">' +photos[i].filters +'</div>';
