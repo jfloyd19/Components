@@ -5,7 +5,6 @@ var path = require('path')
 var AWS = require('aws-sdk')
 const fs = require('fs')
 var multer = require('multer');
-var timestamp = new Date().getTime();
 let extname = ''
 var storage = multer.diskStorage({
 	destination: './public/currentimage/',
@@ -35,7 +34,7 @@ uploadN(req, res, (err) =>{
 		res.render('index', {msg: err});
 	}
 	else{
-
+		var timestamp = new Date().getTime();
 		console.log(req.file);
 		const localImage = String(req.file.path);
 		console.log(localImage);
@@ -67,12 +66,14 @@ s3.putObject({
 	console.log('file uploaded successfully.');
 	});
 	url = 'https://picopyimg.s3.us-east-2.amazonaws.com/' + canvasRemoteName
+url2 = 'https://picopyimg.s3.us-east-2.amazonaws.com/' + imageRemoteName
 console.log(url);
 	  object = req.body.Private ? true : false;
 	console.log(req.session.user.user_id);
 console.log(object);
 console.log(req.body.imgString);
 //insert photo data into table
+if(req.body.imgString != ""){
 var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${url}', '${req.body.imgString}', '${object}');`;
 	  db.any(query)
         .then(function () {
@@ -84,9 +85,22 @@ var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  
 request.flash('error', err);
             console.log(err);
         }) 
-	}
+}else{
+	var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${url2}', '${req.body.imgString}', '${object}');`;
+	  db.any(query)
+        .then(function () {
+	console.log("DB Updated successfully");
+          res.render('index', {title: 'Picopy', user: req.session.user});
+        })
+        .catch(function (err) {
+            // display error message in case an error
+request.flash('error', err);
+            console.log(err);
+        }) 
+	
+}
+}
 	});
-
 
 
 
