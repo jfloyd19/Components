@@ -28,17 +28,17 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #222;
+  background: #222; 
 }
-
+ 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #fff;
+  background: #fff; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #fff;
+  background: #fff; 
 }
   </style>
 <script src="dist/popupS.min.js"></script>
@@ -56,9 +56,10 @@
         <div class="row">
             <a id="gallery-link" href="/gallery">View Gallery</a>
         </div>
-        <div class="row list_container" style="height: 500px" id="filter-row">
+	<h3 class="display-4" id="filter-title">Filters</h3>
+        <div class="row list_container" style="height: 600px" id="filter-row">
           <div class="col filters">
-            <h3 class="display-4" id="filter-title">Filters</h3>
+            
                 <div class="form-check">
                     <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="grayscale">Grayscale</label>
                 </div>
