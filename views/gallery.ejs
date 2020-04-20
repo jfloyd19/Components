@@ -183,23 +183,25 @@
 
           //Means it is a user query
           else if(option1[0] == 2){
+            console.log(option1);
             //Get just the user from the string
             var lookingFor = option1.substring(1);
             //Sort through all the photos to see if one with the username is found
+            var found = false;
             for(var x = 0; x < listToView.length; x++){
-              found = false;
               //Push photos to list if username matches
+              console.log(listToView[x].username.toLowerCase(), lookingFor, listToView[x].username.toLowerCase() == lookingFor);
               if(listToView[x].username.toLowerCase() == lookingFor){
                 photos.push(listToView[x]);
                 found = true;
               }
               //If it's not found, return so it doesn't glitch
-              if(!found){
+            }
+            if(!found){
                 alert("User not found.");
                 photos = listToView;
                 return;
               }
-            }
           //If no sort was selected/"All photos"
           }else if(option1 == 0){//Otherwise leave the array unfiltered
             photos = listToView;
@@ -219,7 +221,7 @@
               var path = photos[i].filename;
               gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
               gallery += '<div class="fb-share-button" data-href="https://d17fnq9dkz9hgj.cloudfront.net/breed-uploads/2018/09/dog-landing-hero-lg.jpg?bust=1536935129&width=1080" data-layout="button" data-size="large">';
-              gallery += '<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F' + photos[i].filename + '%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share';
+              gallery += '<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=' + photos[i].filename + ';src=sdkpreparse" class="fb-xfbml-parse-ignore">Share';
               gallery += '</a>';
               gallery += '</div>';
               gallery += '<div class = "filterText">';
