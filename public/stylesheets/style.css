@@ -107,10 +107,15 @@ select{
   color:#9d9d9d;
 }
 #footer{
-  position: absolute;
+  position: fixed;
   bottom:0;
-  margin-left:50%;
+  margin-left:40%;
   transform: translateX(-50%);
+  z-index: 10;
+  background:rgb(0,0,0,0.5);
+  padding:10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 #save-button{
   margin-bottom:30px;
@@ -217,3 +222,7 @@ html,body{
   border-top-right-radius: 10px;
   text-align: center;
 }
+#image-canvas{
+  z-index: -1;
+}
+ol{margin:0;padding:0;}
