@@ -210,7 +210,7 @@
           //Add all photos from sorted and filtered array to the gallery-photos div
           for(var i = 0; i < photos.length; i++)
             {
-              var path = "/gallery/" + photos[i].filename;
+              var path = photos[i].filename;
               gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
               gallery += '<div class = "filterText">';
               gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  

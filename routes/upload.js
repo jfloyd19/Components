@@ -16,8 +16,8 @@ var storage = multer.diskStorage({
 });
 var uploadN = multer({storage: storage}).single('image_uploads');
 
-const BUCKET = 'picopy'
-const REGION = 'us-east-2'
+const BUCKET = 'picopyimg'
+const REGION = 'us-east-2' 
 
 const ACCESS_KEY = ''
 const SECRET_KEY = ''
@@ -48,7 +48,7 @@ uploadN(req, res, (err) =>{
 	  Key: imageRemoteName
 	}, function(err, data){
 	if(err){console.log('file upload failed')}
-	console.log('file uploaded successfully. ${data.Location}');
+	console.log('file uploaded successfully.');
 	});
 
 var writeFile = String("./public/currentimage/canvas" + extname);
@@ -64,21 +64,24 @@ s3.putObject({
 	  Key: canvasRemoteName
 	}, function(err, data){
 	if(err){console.log('file upload failed')}
-	console.log('file uploaded successfully. ${data.Location}');
+	console.log('file uploaded successfully.');
 	});
-	  
-	console.log(req.session.user.user_ids);
-console.log(req.body.Private.checked);
+	url = 'https://picopyimg.s3.us-east-2.amazonaws.com/' + canvasRemoteName
+console.log(url);
+	  object = req.body.Private ? true : false;
+	console.log(req.session.user.user_id);
+console.log(object);
 console.log(req.body.imgString);
-res.render('index', {title: 'Picopy', user: req.session.user});
-var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_ids}', '${canvasRemoteName}', '${req.body.imgString}', '${req.body.Private.checked}');`;
+//insert photo data into table
+var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${url}', '${req.body.imgString}', '${object}');`;
 	  db.any(query)
         .then(function () {
-          
+	console.log("DB Updated successfully");
+          res.render('index', {title: 'Picopy', user: req.session.user});
         })
         .catch(function (err) {
             // display error message in case an error
-            request.flash('error', err);
+request.flash('error', err);
             console.log(err);
         }) 
 	}

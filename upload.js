@@ -1,13 +1,13 @@
 var AWS = require('aws-sdk')
 const fs = require('fs')
 
-const BUCKET = 'picopyimages'
+const BUCKET = 'picopy'
 const REGION = 'us-east-2'
-const ACCESS_KEY = 'AKIAJ3BEYHSUGHE3F53A'
-const SECRET_KEY = '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'
+const ACCESS_KEY = 'AKIAI7XMHO6HJZGSENCQ'
+const SECRET_KEY = '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'
 
-const localImage = './public/currentimage/current_image.png'
-const imageRemoteName = `${new Date().getTime()}.png`
+const localImage = 'canvas.png'
+const imageRemoteName ='canvas.png'
 
 AWS.config.update({
   accessKeyId: ACCESS_KEY,
