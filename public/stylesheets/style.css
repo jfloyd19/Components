@@ -163,12 +163,27 @@ ol{
   transition-duration: 0.3s;
   
   }
-  
+  .filterText .btn {
+    font-size: 0.5em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    opacity: 0;
+    transition-delay: 0.2s;
+    transition-duration: 0.3s;
+    
+    }
   .filterText:hover .title,
   .filterText:focus .title {
   opacity: 1;
   transform: translateY(-50px);
   -webkit-transform: translateY(-50px);
+  }
+  .filterText:hover .btn,
+  .filterText:focus .btn {
+  opacity: 1;
+  transform: translateY(-40px);
+  -webkit-transform: translateY(-25px);
   }
 html,body{
   overflow-x: hidden;
