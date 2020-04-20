@@ -75,17 +75,30 @@ $(document).ready(function(){
   function invertfun() {toggleFilter(" invert(100%)", "invert");}
   function lightblurfun() {toggleFilter(" blur(2px)", "lightblur");}
   function heavyblurfun() {toggleFilter(" blur(4px)", "heavyblur");}
-  function darkerfun()  {toggleFilter(" brightness(50%)", "darker");}
-  function lighterfun() {toggleFilter(" brightness(150%)", "lighter");}
-  function lowcontrastfun() {toggleFilter(" contrast(75%)","lowcontrast");}
-  function highcontrastfun() {toggleFilter(" contrast(125%)", "highcontrast");}
+  function darkerfun1()  {toggleFilter(" brightness(50%)", "darker1");}
+  function darkerfun2()  {toggleFilter(" brightness(75%)", "darker2");}
+  function lighterfun1() {toggleFilter(" brightness(125%)", "lighter1");}
+  function lighterfun2() {toggleFilter(" brightness(150%)", "lighter2");}
+  function c1() {toggleFilter(" contrast(0.6)","c1");}
+  function c2() {toggleFilter(" contrast(0.8)","c2");}
+  function c3() {toggleFilter(" contrast(1.2)","c3");}
+  function c4() {toggleFilter(" contrast(1.4)","c4");}
   function dropshadowfun() {toggleFilter( " drop-shadow(8px 8px 10px gray)","dropshadow");}
+  function huerotate45fun() {toggleFilter(" hue-rotate(45deg)", "huerotate45");}
   function huerotate90fun() {toggleFilter(" hue-rotate(90deg)", "huerotate90");}
+  function huerotate135fun() {toggleFilter(" hue-rotate(135deg)", "huerotate135");}
   function huerotate180fun() {toggleFilter(" hue-rotate(180deg)", "huerotate180");}
+  function huerotate225fun() {toggleFilter(" hue-rotate(225deg)", "huerotate225");}
   function huerotate270fun() {toggleFilter(" hue-rotate(270deg)", "huerotate270");}
+  function huerotate315fun() {toggleFilter(" hue-rotate(315deg)", "huerotate315");}
   function transparentfun() {toggleFilter(" opacity(30%)", "transparent");}
-  function saturatefun() {toggleFilter(" saturate(8)", "saturate");}
-  function sepiafun() {toggleFilter(" sepia(50%)", "sepia");}
+  function saturate1fun() {toggleFilter(" saturate(2)", "saturate1");}
+  function saturate2fun() {toggleFilter(" saturate(5)", "saturate2");}
+  function saturate3fun() {toggleFilter(" saturate(7)", "saturate3");}
+  function saturate4fun() {toggleFilter(" saturate(10)", "saturate4");}
+  function sepiafun1() {toggleFilter(" sepia(33%)", "sepia1");}
+  function sepiafun2() {toggleFilter(" sepia(66%)", "sepia2");}
+  function sepiafun3() {toggleFilter(" sepia(100%)", "sepia3");}
 
   //Used to store the images with the filters into the DB
   var dataURL;
