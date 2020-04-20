@@ -81,9 +81,8 @@ var display = function(){
         var path = photos[i].filename;
         gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
         gallery += '<div class="fb-share-button" data-href="https://d17fnq9dkz9hgj.cloudfront.net/breed-uploads/2018/09/dog-landing-hero-lg.jpg?bust=1536935129&width=1080" data-layout="button" data-size="large">';
-        gallery += '<a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=' + photos[i].filename + ';src=sdkpreparse" class="fb-xfbml-parse-ignore">Share';
-        gallery += '</a>';
-        gallery += '</div>';
+        gallery += '<div><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=' + photos[i].filename + ';src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>';
+        gallery += '<a href="' + photos[i].filename + '">Download</a></div>';
         gallery += '<div class = "filterText">';
         gallery += '<img src="';gallery += path;gallery += '" class="rounded mx-auto d-block"/>';  
         gallery += '<div class ="title">' +photos[i].filters +'</div>';
@@ -141,7 +140,6 @@ $(document).ready(function(){
         current[1] = opval;
         display();
     });
-
 });
 
 //Called by the filter modal

@@ -10,8 +10,8 @@ const url = require('url');
 const BUCKET = 'picopyimg'
 const REGION = 'us-east-2' 
 
-const ACCESS_KEY = 'AKIAIUFV4KBMM63KJH2A'
-const SECRET_KEY = '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'
+const ACCESS_KEY = ''
+const SECRET_KEY = ''
 
 
 	var s3 = new AWS.S3({
