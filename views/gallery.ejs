@@ -125,15 +125,17 @@
               <p>Refresh if you don't see it.</p>
             </div>
 
-    <div onclick="loadPhotos();" id="gallery-photos">
+    <div id="gallery-photos">
       <!--  -->
       <div id="fb-root"></div>
       <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0">
       </script>
       <div style="display:none" id="count-obj"><%- photo_count[0].count %></div>
       <div style="display:none" id="photo-obj"><%- JSON.stringify(photo_data) %></div>
+      <div style="display: none" id="username-obj"><%- user.username %></div>
       <script>
         var prePhotos = JSON.parse(document.getElementById("photo-obj").innerHTML);
+        var un = document.getElementById("username-obj").innerHTML; 
         var publicPhotos = [];
         var privatePhotos = [];
         var viewingPrivate = false;
@@ -191,7 +193,7 @@
             for(var x = 0; x < listToView.length; x++){
               //Push photos to list if username matches
               console.log(listToView[x].username.toLowerCase(), lookingFor, listToView[x].username.toLowerCase() == lookingFor);
-              if(listToView[x].username.toLowerCase() == lookingFor){
+              if(listToView[x].username.toLowerCase() == lookingFor.toLowerCase()){
                 photos.push(listToView[x]);
                 found = true;
               }
@@ -249,7 +251,7 @@
                   display();
                 }else if(opval =='my-photos'){
                   //Set user to currently logged in user
-                  $(current[0] = "2" + username);
+                  $(current[0] = "2" + un);
                   display();
                 }
             });
