@@ -181,8 +181,8 @@ ol{
   .filterText:hover .title,
   .filterText:focus .title {
   opacity: 1;
-  transform: translateY(-50px);
-  -webkit-transform: translateY(-50px);
+  transform: translateY(-60px);
+  -webkit-transform: translateY(-60px);
   }
   .filterText:hover .btn,
   .filterText:focus .btn {
