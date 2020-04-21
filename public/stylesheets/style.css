@@ -167,10 +167,6 @@ ol{
   transform: translateY(30px);
   -webkit-transform: translateY(30px);
   }
-  .btn{
-    padding: 0%;
-    display: none;
-  }
   .filterText .title{
   font-size: 0.5em;
   text-transform: uppercase;

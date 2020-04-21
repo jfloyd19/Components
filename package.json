@@ -19,5 +19,8 @@
     "mysql": "^2.18.1",
     "pg-promise": "^10.4.4",
     "serve-favicon": "~2.4.5"
+  },
+  "engines":{
+    "node": "12.x"
   }
 }
