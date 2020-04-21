@@ -63,9 +63,14 @@ select{
 }
 
 #header-logo{
-  padding-left:30px;
+  margin: auto;
   padding-top: 10px;
 }
+#header-logo-img{
+  margin: auto;
+  padding-top: 10px;
+}
+
 .filters{
   color:#9d9d9d;
 }
@@ -193,7 +198,7 @@ ol{
   top: 30%;
   opacity: 1;
   }
-  
+
 html,body{
   overflow-x: hidden;
 }
