@@ -45,7 +45,7 @@
         </li>
       <li class="nav-item">
         <!-- NEED TO DISABLE THIS IF NOT LOGGED IN -->
-        <%- user.username == null ? '<a class="nav-link">Log in to view private photos</a>' : '<a class="nav-link" id="viewPrivateToggle" onclick="viewPrivate()">My Private Photos</a>' %>
+        <%- user.username == null ? '<a class="nav-link">Log in to view private photos</a>' : '<a class="nav-link" id="viewPrivateToggle" onclick="viewPrivate(\'' + user.username + '\')">My Private Photos</a>' %>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right" style="color:white">
