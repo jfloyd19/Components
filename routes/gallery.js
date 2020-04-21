@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../pgp.js');
-
+var fakie = {
+    username: null
+}
 router.get('/', function(req, res, next) {
 	
 
@@ -20,7 +22,7 @@ router.get('/', function(req, res, next) {
             photo_data: p[0],
             photo_count: p[1],
             //This will be null if no one is logged in!
-            user: req.session.user
+            user: req.session.user ? req.session.user : fakie
 			})
         })
         .catch(function (err) {
