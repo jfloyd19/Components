@@ -5,6 +5,7 @@ $(document).ready(function(){
 
     var imageSource = ""
     var filter_string = ""
+    var extra_filters = ""
     const input = document.getElementById('image_uploads');
     const preview = document.querySelector('.preview');
 
@@ -77,31 +78,61 @@ $(document).ready(function(){
       $("#curr-pic").hide();
       if(document.getElementById("binarize").checked == true){
         binarize(1.5);
+        if(extra_filters.indexOf(" binarize") < 0){
+          extra_filters+=" binarize"
+        }
+      }else{
+        extra_filters = extra_filters.replace(" binarize","");
       }
       if(document.getElementById("edge").checked == true){
         edge();
+        if(extra_filters.indexOf(" edge") < 0){extra_filters += " edge"}
+      }else{
+        extra_filters = extra_filters.replace(" edge","");
       }
       if(document.getElementById("emboss").checked==true){
         emboss();
+        if(extra_filters.indexOf(" emboss") < 0){extra_filters += " emboss"}
+      }else{
+        extra_filters = extra_filters.replace(" emboss","");
       }
       if(document.getElementById("flip").checked == true){
         flip();
+        if(extra_filters.indexOf(" flip") < 0){extra_filters += " flip"}
+      }else{
+        extra_filters = extra_filters.replace(" flip","");
       }
       if(document.getElementById("gamma").checked == true){
         gamma(4);
+        if(extra_filters.indexOf(" gamma") < 0){extra_filters += " gamma"}
+      }else{
+        extra_filters = extra_filters.replace(" gamma","");
       }
       if(document.getElementById("mosaic").checked == true){
         mosaic(10);
+        if(extra_filters.indexOf(" mosaic") < 0){extra_filters += " mosaic"}
+      }else{
+        extra_filters = extra_filters.replace(" mosaic","");
       }
       if(document.getElementById("posterize").checked == true){
         posterize(3.5);
+        if(extra_filters.indexOf(" posterize") < 0){extra_filters += " posterize"}
+      }else{
+        extra_filters = extra_filters.replace(" posterize","");
       }
       if(document.getElementById("sharpen").checked == true){
-        sharpen(5);
+        sharpen(15);
+        if(extra_filters.indexOf(" sharpen") < 0){extra_filters += " sharpen"}
+      }else{
+        extra_filters = extra_filters.replace(" sharpen","");
       }
       if(document.getElementById("solarize").checked == true){
         solarize();
+        if(extra_filters.indexOf(" solarize") < 0){extra_filters += " solarize"}
+      }else{
+        extra_filters = extra_filters.replace(" solarize","");
       }
+      console.log(extra_filters);
   }
   
   function binarize(l){
@@ -161,6 +192,7 @@ $(document).ready(function(){
       convertToCanvasThenImg();
       document.getElementById("imgString").value = filter_string;
     }
+    console.log(filter_string, extra_filters)
   }
 
   function grayfun() {toggleFilter(" grayscale(100%)", "grayscale");}
@@ -218,7 +250,7 @@ $(document).ready(function(){
       data: { 
          image_data: dataURL,
          Private: $("#Private").is(":checked"),
-         filter_s: filter_string 
+         filter_s: filter_string + extra_filters 
       }
     }).done(function(o) {
       console.log('saved'); 
