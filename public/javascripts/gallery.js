@@ -61,7 +61,7 @@ var display = function(){
             photos = listToView;
             return;
         }
-    
+
     //If no sort was selected/"All photos"
     }else if(option1 == 0){//Otherwise leave the array unfiltered
         photos = listToView;
@@ -79,14 +79,16 @@ var display = function(){
     for(var i = 0; i < photos.length; i++)
     {
       var path = photos[i].filename;
+      var path_ext = path.split("/");
+      var path_ext_parse = path_ext[path_ext.length-1];
       gallery += '<a class="containera" href =' + photos[i].filename + ' download>';
       gallery += '<div class = "filterText">';
       gallery += '<img src="';gallery += path;
       gallery += '" class="rounded mx-auto d-block"/>';
-      gallery += '<button class="btn" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpicopyimg.s3.us-east-2.amazonaws.com%2F&amp" class="fb-xfbml-parse-ignore">Share</a></button>';  
+      gallery += '<button class="btn" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpicopyimg.s3.us-east-2.amazonaws.com%2F'+path_ext_parse+'&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></button>';
       gallery += '<div class ="title">' +photos[i].filters +'</div>';
       gallery += '</div>'
-      gallery += '</a>';   
+      gallery += '</a>';
     }
     document.getElementById("gallery-photos").innerHTML = gallery;
 }
@@ -95,7 +97,7 @@ $(document).ready(function(){
     //Raw photo data from the server
     var prePhotos = JSON.parse(document.getElementById("photo-obj").innerHTML);
     //Username of logged in user
-    var un = document.getElementById("username-obj").innerHTML; 
+    var un = document.getElementById("username-obj").innerHTML;
 
     //Seperate the public and private photos
     for(var i = 0; i < prePhotos.length; i++){
@@ -112,7 +114,7 @@ $(document).ready(function(){
 
     //Display with default options on load
     display();
-    
+
     //Detects a change of the select menu on the left
     $('#view-photos-by').change(function() {
         //Value of the select
