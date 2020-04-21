@@ -150,6 +150,7 @@ ol{
   position: absolute;
   top: 0;
   left: 0;
+  overflow-y: hidden;
   color: #fff;
   -webkit-transition: all 300ms ease-out;
   -moz-transition: all 300ms ease-out;
@@ -158,7 +159,7 @@ ol{
   transition: all 300ms ease-out;
   opacity: 0;
   width: 100%;
-  height: 100%;
+  height: 120%;
   padding: 130px 20px;
   }
   .filterText:hover .fadedbox { opacity:1;background: rgb(0,0,0,0.8) }
@@ -168,8 +169,8 @@ ol{
   -o-transition: all 300ms ease-out;
   -ms-transition: all 300ms ease-out;
   transition: all 300ms ease-out;
-  transform: translateY(30px);
-  -webkit-transform: translateY(30px);
+  transform: translateY(40px);
+  -webkit-transform: translateY(40px);
   }
   .filterText .title{
   font-size: 0.5em;
@@ -181,13 +182,15 @@ ol{
   .filterText:hover .title ,
   .filterText:focus .title {
   opacity: 1;
-  transform: translateY(-50%);
-  -webkit-transform: translateY(-50%);
+  position: absolute;
+  top: 20%;
+  transform: translateY(30px);
+  -webkit-transform: translateY(30px);
   }
   .filterText:hover .btn{
   display: inline-block;
   position: absolute;
-  top: 140px;
+  top: 30%;
   opacity: 1;
   }
   .filterText:hover .btn2{
