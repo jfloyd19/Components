@@ -103,7 +103,7 @@ $(document).ready(function(){
         extra_filters = extra_filters.replace(" flip","");
       }
       if(document.getElementById("gamma").checked == true){
-        gamma(4);
+        gamma(2);
         if(extra_filters.indexOf(" gamma") < 0){extra_filters += " gamma"}
       }else{
         extra_filters = extra_filters.replace(" gamma","");
