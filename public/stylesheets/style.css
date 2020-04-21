@@ -132,9 +132,18 @@ ol{
   position: relative;
   overflow: hidden;
 }
+
+.filterText {
+  cursor: pointer;
+  height: auto;
+  position: relative;
+  overflow-wrap: normal;
+  width: auto;
+  text-align:bottom;
+  }
   .filterText .fadedbox {
-  background-color: #ffffff;
-  position: static;
+  background-color: #666666;
+  position: absolute;
   top: 0;
   left: 0;
   color: #fff;
@@ -144,11 +153,11 @@ ol{
   -ms-transition: all 300ms ease-out;
   transition: all 300ms ease-out;
   opacity: 0;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   padding: 130px 20px;
   }
-  .filterText:hover .fadedbox { opacity: 1; }
+  .filterText:hover .fadedbox { opacity: 0.8; }
   .filterText .text {
   -webkit-transition: all 300ms ease-out;
   -moz-transition: all 300ms ease-out;
@@ -158,38 +167,37 @@ ol{
   transform: translateY(30px);
   -webkit-transform: translateY(30px);
   }
-  .filterText .title {
+  .btn{
+    padding: 0%;
+    display: none;
+  }
+  .filterText .title{
   font-size: 0.5em;
   text-transform: uppercase;
-  text-align: center;
-  color: rgb(255, 255, 255);
   opacity: 0;
   transition-delay: 0.2s;
   transition-duration: 0.3s;
-  
   }
-  .filterText .btn {
-    font-size: 0.5em;
-    text-transform: uppercase;
-    text-align: center;
-    color: rgb(255, 255, 255);
-    opacity: 0;
-    transition-delay: 0.2s;
-    transition-duration: 0.3s;
-    
-    }
-  .filterText:hover .title,
+  .filterText:hover .title ,
   .filterText:focus .title {
   opacity: 1;
-  transform: translateY(-60px);
-  -webkit-transform: translateY(-60px);
-  }
-  .filterText:hover .btn,
-  .filterText:focus .btn {
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  }  
+  .filterText:hover .btn{
+  display: inline-block;
+  position: absolute;
+  top: 140px;
   opacity: 1;
-  transform: translateY(-40px);
-  -webkit-transform: translateY(-25px);
   }
+  .filterText:hover .btn2{
+    display: inline-block;
+    position: absolute;
+    top: 160px;
+    opacity: 1;
+    }
+  
+
 html,body{
   overflow-x: hidden;
 }
@@ -221,12 +229,8 @@ html,body{
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   text-align: center;
-  position: fixed;
 }
 #image-canvas{
   z-index: -1;
 }
 ol{margin:0;padding:0;}
-.fb-btn{
-  display:none;
-}
