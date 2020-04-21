@@ -230,3 +230,10 @@ html,body{
   z-index: -1;
 }
 ol{margin:0;padding:0;}
+.download-btn{
+  margin-left:50%;
+}
+.filterText:hover .download-btn{
+
+  margin-left:50%;
+  }

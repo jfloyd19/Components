@@ -91,6 +91,7 @@ var display = function(){
       gallery += '" class="rounded mx-auto d-block"/>';
       gallery += '<div class = "fadedbox">';
       gallery += '<button class="btn" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fpicopyimg.s3.us-east-2.amazonaws.com%2F'+path_ext_parse+'&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></button>';
+      gallery += '<a class="btn download-btn btn-default" href="'+photos[i].filename+'" download>Download</a>';
       gallery += '<div class ="title">' +photos[i].filters +'</div>';
       gallery += '</div>'
       gallery += '</div>'
