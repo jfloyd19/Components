@@ -57,7 +57,11 @@ var display = function(){
         }
         //If it's not found, return so it doesn't glitch
         if(!found){
-            alert("User not found.");
+            alert(viewingPrivate ? "You don't have any private photos" : "User not found.");
+            viewingPrivate = viewingPrivate ? false : viewingPrivate;
+            document.getElementById("viewPrivateToggle").innerHTML = "My Private Photos";
+            $("#my-photos-select").css("display",  "block");
+            $("#photos-by-user-select").css("display", "block");
             photos = listToView;
             return;
         }
@@ -100,6 +104,7 @@ $(document).ready(function(){
     var prePhotos = JSON.parse(document.getElementById("photo-obj").innerHTML);
     //Username of logged in user
     var un = document.getElementById("username-obj").innerHTML;
+    console.log(un);
 
     //Seperate the public and private photos
     for(var i = 0; i < prePhotos.length; i++){
@@ -160,10 +165,11 @@ var sortByUser = function(){
 //Called by clicking "view private"
 //Toggle options that don't make any sense
 //    if you are viewing private, don't show options to view photos by user or public photos
-var viewPrivate = function(){
+var viewPrivate = function(username){
     viewingPrivate = !viewingPrivate;
     document.getElementById("viewPrivateToggle").innerHTML = !viewingPrivate ? "My Private Photos" : "Click to view public photos";
     $("#my-photos-select").css("display", !viewingPrivate ? "block" : "none");
     $("#photos-by-user-select").css("display", !viewingPrivate ? "block" : "none");
+    current[0] = "2" + username;
     display();
 }
