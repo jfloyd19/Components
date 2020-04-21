@@ -5,7 +5,7 @@
   -moz-column-count:    5;
   -moz-column-gap:      0px;
   column-count:         5;
-  column-gap:           0px;  
+  column-gap:           0px;
 }
 
 #gallery-photos img {
@@ -91,15 +91,19 @@ select{
 #gallery-link{
   color:#9d9d9d;
   text-decoration: none;
-  padding-left:35px;
+  /*padding-left:35px;*/
+  margin: auto;
   font-size: 20px;
 }
 #gallery-link:hover{
   color:white;
 }
+#gallery_logo{
+  padding-bottom: 10%;
+}
 #imgicon{
   font-size:100px;
-  
+
 }
 #no-image{
   text-align:center;
@@ -179,7 +183,7 @@ ol{
   opacity: 1;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
-  }  
+  }
   .filterText:hover .btn{
   display: inline-block;
   position: absolute;
@@ -192,7 +196,7 @@ ol{
     top: 160px;
     opacity: 1;
     }
-  
+
 
 html,body{
   overflow-x: hidden;
