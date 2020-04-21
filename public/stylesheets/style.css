@@ -157,7 +157,7 @@ ol{
   height: 100%;
   padding: 130px 20px;
   }
-  .filterText:hover .fadedbox { opacity:1;background: rgb(0,0,0,0.5) }
+  .filterText:hover .fadedbox { opacity:1;background: rgb(0,0,0,0.8) }
   .filterText .text {
   -webkit-transition: all 300ms ease-out;
   -moz-transition: all 300ms ease-out;
@@ -237,3 +237,7 @@ ol{margin:0;padding:0;}
 
   margin-left:15%;
   }
+  .filterText:hover .btn{
+
+    margin-top:5%;
+    }
