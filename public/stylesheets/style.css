@@ -193,14 +193,7 @@ ol{
   top: 30%;
   opacity: 1;
   }
-  .filterText:hover .btn2{
-    display: inline-block;
-    position: absolute;
-    top: 160px;
-    opacity: 1;
-    }
-
-
+  
 html,body{
   overflow-x: hidden;
 }
