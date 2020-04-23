@@ -18,6 +18,8 @@ The vast majority of our code falls under the routes, public, and views director
 |     used for initializing database
 | insert.sql
 |     used for implementing gallery functionality before Amazon S3
+| pgp.js
+|     database setup and auth for the app
 ```
 
 # Accessing Picopy
