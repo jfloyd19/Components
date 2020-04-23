@@ -14,6 +14,10 @@ The vast majority of our code falls under the routes, public, and views director
 | app.js
 | pgp.js
 | package.json
+| create_db.sql
+|     used for initializing database
+| insert.sql
+|     used for implementing gallery functionality before Amazon S3
 ```
 
 # Accessing Picopy
@@ -29,4 +33,5 @@ to install all the dependencies, then
 to start the web server.
 
 Keys for Amazon and Heroku can be entered in the `upload.js` and `pgp.js` files, respectively.
+
 
