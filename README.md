@@ -36,4 +36,9 @@ to start the web server.
 
 Keys for Amazon and Heroku can be entered in the `upload.js` and `pgp.js` files, respectively.
 
+![Architecture Diagram](https://imgur.com/a/diC0IVu)
+[Filter Library Used](https://github.com/arahaya/ImageFilters.js)
+[Amazon S3](https://aws.amazon.com/free/storage/?sc_channel=PS&sc_campaign=acquisition_US&sc_publisher=google&sc_medium=ACQ-P%7CPS-GO%7CBrand%7CDesktop%7CSU%7CStorage%7CS3%7CUS%7CEN%7CText&sc_content=s3_e&sc_detail=amazon%20s3&sc_category=Storage&sc_segment=293617570044&sc_matchtype=e&sc_country=US&s_kwcid=AL!4422!3!293617570044!e!!g!!amazon%20s3&ef_id=CjwKCAjw1v_0BRAkEiwALFkj5gmtOxfFzd_dSxfovDvFwgfGnNHXNAAMCzQ8AmzPD0yVC9xfEcosuRoC2kwQAvD_BwE:G:s)
+[Heroku](https://www.heroku.com/)
+[NPM Cookie Sessions](https://www.npmjs.com/package/cookie-session)
 
