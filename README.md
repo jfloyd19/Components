@@ -8,6 +8,9 @@ The vast majority of our code falls under the routes, public, and views director
 |       (javascripts, css files, site images)
 ├── views
 |   ├── EJS files converted to html and served to the client
+├── routes
+|   ├── when client sends a REST request, they are directed to
+|       one of these files.
 | app.js
 | pgp.js
 | package.json
