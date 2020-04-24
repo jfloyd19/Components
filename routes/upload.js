@@ -8,48 +8,49 @@ var multer = require('multer');
 let extname = ''
 const url = require('url');
 const BUCKET = 'picopyimg'
-const REGION = 'us-east-2' 
+const REGION = 'us-east-2'
 
 const ACCESS_KEY = ''
 const SECRET_KEY = ''
 
 
-	var s3 = new AWS.S3({
+
+
+
+router.get('/single', function(req, res, err) {
+	const s3 = new AWS.S3({
 	  accessKeyId: ACCESS_KEY,
 	  secretAccessKey: SECRET_KEY,
 	  region: REGION
 	});
-
-
-router.post('/single', function(req, response, err) {
 	var u;
-	var image_data = req.body.image_data;
-	var base64Data = image_data.replace(/^data:image\/png;base64,/, "");
-	const localImage = path.resolve("out.png");
-	fs.writeFileSync(localImage, base64Data, 'base64', function(err) {
-		console.log(err);
-	});
 	const imageRemoteName = String(new Date().getTime() + ".png");
-	s3.putObject({
-		Bucket: BUCKET,
-		Body: fs.readFileSync(localImage),
-		Key: imageRemoteName
-	  }).promise()
-	  .then(response => {
-		  u = (s3.getSignedUrl('getObject', { Bucket: BUCKET, Key: imageRemoteName }).split("?").shift());
+  const fileType = req.query['file-type'];
+  const s3Params = {
+    Bucket: BUCKET,
+    Key: imageRemoteName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log(err);
+			res.end();
+    }
 
-		var query = `INSERT INTO photo VALUES (DEFAULT, '${req.session.user.user_id}',  '${u}', '${req.body.filter_s}', '${req.body.Private}');`;
-		db.any(query)
-			.then(function () {
-				console.log("DB Updated successfully");
-			})
-			.catch(function (err) {
-				console.log(err);
-			}) 
-	  })
-	  .catch(err => {
-		console.log('failed:', err)
-	  })
+
+		var objURL = `https://${BUCKET}.s3.amazonaws.com/${imageRemoteName}`
+    const returnData = {
+      signedRequest: data,
+      url: objURL
+    };
+
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+
+
 });
 
 module.exports = router;
