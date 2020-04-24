@@ -14,6 +14,7 @@ var createAccount = require('./routes/createAccount');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var upload = require('./routes/upload');
+var saveToDb = require('./routes/saveToDb')
 
 var app = express();
 
@@ -42,7 +43,8 @@ app.use('/register', register);
 app.use('/createaccount',createAccount);
 app.use('/login', login);
 app.use('/logout', logout);
-app.post('/single',  upload);
+app.get('/single',  upload);
+app.post('/saveToDb', saveToDb);
 app.use(express.static(__dirname + '/public'));
 
 // catch 404 and forward to error handler
