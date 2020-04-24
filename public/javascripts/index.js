@@ -41,7 +41,7 @@ $(document).ready(function(){
           image.src = URL.createObjectURL(file);
       imageSource = image.src;
           listItem.appendChild(image);
-      
+
         } else {
           para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
           listItem.appendChild(para);
@@ -63,7 +63,7 @@ $(document).ready(function(){
   var c;
   var ct;
   function switchToCanvas(x){
-    console.log($("#curr-pic").width()) 
+    console.log($("#curr-pic").width())
       $(".preview").append("<canvas id='image-canvas'></canvas>");
       $("#image-canvas").prop("width", x.width());
       $("#image-canvas").prop("height", x.height());
@@ -73,8 +73,9 @@ $(document).ready(function(){
       //Load the image and set the canvas dimensions to be the same as the image
       var preview_image = document.getElementById('curr-pic');
       //Apply the filters and the image to the canvas
-      ct.filter = filter_string;
+
       ct.drawImage(preview_image, 0, 0, x.prop("width"),x.prop("height"));
+
       $("#curr-pic").hide();
       if(document.getElementById("binarize").checked == true){
         binarize(1.5);
@@ -133,8 +134,9 @@ $(document).ready(function(){
         extra_filters = extra_filters.replace(" solarize","");
       }
       console.log(extra_filters);
+      ct.filter = filter_string;
   }
-  
+
   function binarize(l){
     var imageData = ct.getImageData(0,0,c.width,c.height);
     var filtered = ImageFilters.Binarize(imageData, l);
@@ -229,12 +231,12 @@ $(document).ready(function(){
   var dataURL;
   function convertToCanvasThenImg(){
     //Set up the canvas element
-    var canvas = document.getElementById('myCanvas');
+    var canvas = document.getElementById('image-canvas');
     var ctx = canvas.getContext("2d");
     //Load the image and set the canvas dimensions to be the same as the image
     var preview_image = document.getElementById('curr-pic')
-    canvas.width = preview_image.naturalWidth;
-    canvas.height = preview_image.naturalHeight;
+    canvas.width = preview_image.Width();
+    canvas.height = preview_image.Height();
     //Apply the filters and the image to the canvas
     ctx.filter = filter_string;
     ctx.drawImage(preview_image, 0, 0);
@@ -242,20 +244,83 @@ $(document).ready(function(){
     dataURL = canvas.toDataURL();
   }
 
+  function dataURLtoFile(dataurl, filename) {
+    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while(n--){
+        u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, {type:mime});
+}
+
+let Private1 = "";
+let imageStringss = "";
+let UserId = 1;
   function submit_canvas(){
+
+    console.log("submit_canvas called");
     dataURL = c.toDataURL();
-    $.ajax({
-      type: "POST",
-      url: "/single",
-      data: { 
-         image_data: dataURL,
-         Private: $("#Private").is(":checked"),
-         filter_s: filter_string + extra_filters 
-      }
-    }).done(function(o) {
-      console.log('saved'); 
-    });
+    const file = dataURLtoFile(dataURL, 'out.png');
+    if(file == null){
+      return alert('No file selected.');
+    }
+    console.log("Calling getSignedRequest");
+    Private1 = $("#Private").is(":checked");
+    imageStringss = filter_string + extra_filters;
+    UserId = document.getElementById("userIdNum").value;
+    console.log(file);
+    console.log(UserId);
+    getSignedRequest(file);
+
+
   }
+
+  function getSignedRequest(file){
+  const xhr = new XMLHttpRequest();
+  console.log("Calling /single maybe");
+
+  xhr.open('GET', `/single?UserId=${UserId}&file-type=${file.type}&Private=${Private1}&filter_s=${imageStringss}`);
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        const response = JSON.parse(xhr.responseText);
+        uploadFile(file, response.signedRequest, response.url);
+      }
+      else{
+        alert('Could not get signed URL.');
+      }
+    }
+  };
+  xhr.send();
+}
+
+function uploadFile(file, signedRequest, url){
+  const xhr = new XMLHttpRequest();
+  xhr.open('PUT', signedRequest);
+  xhr.onreadystatechange = () => {
+    if(xhr.readyState === 4){
+      if(xhr.status === 200){
+        console.log("File upload Success")
+        $.ajax({
+          type: "POST",
+          url: "/saveToDb",
+          data: {
+             url: url,
+             Private: Private1,
+             filter_s: imageStringss,
+             user_id: UserId
+          }
+        });
+        window.location.href = "/gallery";
+      }
+      else{
+        alert('Could not upload file.');
+      }
+    }
+  };
+  xhr.send(file);
+}
+
     const fileTypes = [
         'image/jpeg',
         'image/pjpeg',
