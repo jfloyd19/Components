@@ -14,6 +14,7 @@
   <script src="javascripts/fabric.js"></script>
   <link rel="stylesheet" href="/stylesheets/style.css">
   <script src="/javascripts/if.js"></script>
+  <script> src="https://code.jquery.com/jquery-1.12.4.min.js" </script>
   <style type="text/css">
       form img {
       height: 475px;
@@ -40,9 +41,27 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #fff;
 }
+.box{
+  display: none;
+}
   </style>
 <script src="dist/popupS.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/popupS.min.css">
+<script>
+  $(document).ready(function(){
+    $("select").change(function(){
+        $(this).find("option:selected").each(function(){
+            var optionValue = $(this).attr("value");
+            if(optionValue){
+                $(".box").not("." + optionValue).hide();
+                $("." + optionValue).show();
+            } else{
+                $(".box").hide();
+            }
+        });
+    }).change();
+});
+</script>
 </head>
 <body>
 <div id="main" class="container">
@@ -57,125 +76,139 @@
         <div class="row">
             <a id="gallery-link" style="margin-bottom:5%" href="/gallery">View Gallery</a>
         </div>
+        <h3 class="display-4" id="filter-title">Filters</h3>
+        <div>
+          <select>
+            <option>Filter type</option>
+            <option value="colors">Colors</option>
+            <option value="contrast">Contrast</option>
+            <option value="saturation">Saturation</option>
+            <option value="sepia">Sepia</option>
+            <option value="blur">Blur</option>
+            <option value="advanced">Advanced</option>
+          </select>
+          <br>
+          <br>
+        </div>
         <div class="row list_container" style="height: 500px" id="filter-row">
           <div class="col filters">
-            <h3 class="display-4" id="filter-title">Filters</h3>
+            
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="grayscale">Grayscale</label>
+                    <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="grayscale">Grayscale</label>
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="invertfun()" id="invert">Invert</label>
+                    <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="invertfun()" id="invert">Invert</label>
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lightblurfun()" id="lightblur">Light Blur</label>
+                    <label class="form-check-label box blur"><input type="checkbox" class="form-check-input" value="" onclick="lightblurfun()" id="lightblur">Light Blur</label>
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="heavyblurfun()" id="heavyblur">Heavy Blur</label>
+                    <label class="form-check-label box blur"><input type="checkbox" class="form-check-input" value="" onclick="heavyblurfun()" id="heavyblur">Heavy Blur</label>
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="darkerfun1()" id="darker1">Darker</label>
+                    <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="darkerfun1()" id="darker1">Darker</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="darkerfun2()" id="darker2">Slightly Darker</label>
+                  <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="darkerfun2()" id="darker2">Slightly Darker</label>
               </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lighterfun1()" id="lighter1">Slightly Lighter</label>
+                    <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="lighterfun1()" id="lighter1">Slightly Lighter</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="lighterfun2()" id="lighter2">Lighter</label>
+                  <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="lighterfun2()" id="lighter2">Lighter</label>
               </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="c1()" id="c1">60% Contrast</label>
+                    <label class="form-check-label box contrast"><input type="checkbox" class="form-check-input" value="" onclick="c1()" id="c1">60% Contrast</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="c2()" id="c2">80% Contrast</label>
+                  <label class="form-check-label box contrast"><input type="checkbox" class="form-check-input" value="" onclick="c2()" id="c2">80% Contrast</label>
               </div>
                 <div class="form-check">
-                <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="c3()" id="c3">120% Contrast</label>
+                <label class="form-check-label box contrast"><input type="checkbox" class="form-check-input" value="" onclick="c3()" id="c3">120% Contrast</label>
                 </div>
                 <div class="form-check">
-                <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="c4()" id="c4">140% Contrast</label>
+                <label class="form-check-label box contrast"><input type="checkbox" class="form-check-input" value="" onclick="c4()" id="c4">140% Contrast</label>
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="dropshadowfun()" id="dropshadow">Drop Shadow</label>
+                    <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="dropshadowfun()" id="dropshadow">Drop Shadow</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate45fun()" id="huerotate45">Rotate Hue 45 Degrees</label>
+                  <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="huerotate45fun()" id="huerotate45">Rotate Hue 45 Degrees</label>
               </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate90fun()" id="huerotate90">Rotate Hue 90 Degrees</label>
+                    <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="huerotate90fun()" id="huerotate90">Rotate Hue 90 Degrees</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate135fun()" id="huerotate135">Rotate Hue 135 Degrees</label>
+                  <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="huerotate135fun()" id="huerotate135">Rotate Hue 135 Degrees</label>
               </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate180fun()" id="huerotate180">Rotate Hue 180 Degrees</label>
+                    <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="huerotate180fun()" id="huerotate180">Rotate Hue 180 Degrees</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate225fun()" id="huerotate225">Rotate Hue 225 Degrees</label>
+                  <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="huerotate225fun()" id="huerotate225">Rotate Hue 225 Degrees</label>
               </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate270fun()" id="huerotate270">Rotate Hue 270 Degrees</label>
+                    <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="huerotate270fun()" id="huerotate270">Rotate Hue 270 Degrees</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="huerotate315fun()" id="huerotate315">Rotate Hue 315 Degrees</label>
+                  <label class="form-check-label box colors"><input type="checkbox" class="form-check-input" value="" onclick="huerotate315fun()" id="huerotate315">Rotate Hue 315 Degrees</label>
               </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="transparentfun()" id="transparent">Increased Transparency</label>
+                    <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="transparentfun()" id="transparent">Increased Transparency</label>
                 </div>
                 <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="saturate1fun()" id="saturate1">Low Saturate</label>
+                    <label class="form-check-label box saturation"><input type="checkbox" class="form-check-input" value="" onclick="saturate1fun()" id="saturate1">Low Saturate</label>
                 </div>
                 <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="saturate2fun()" id="saturate2">Med Saturate</label>
-              </div>
-              <div class="form-check">
-                <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="saturate3fun()" id="saturate3">High Saturate</label>
+                  <label class="form-check-label box saturation"><input type="checkbox" class="form-check-input" value="" onclick="saturate2fun()" id="saturate2">Med Saturate</label>
               </div>
               <div class="form-check">
-                <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="saturate4fun()" id="saturate4">Extreme Saturate</label>
-              </div>
-                <div class="form-check">
-                    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun1()" id="sepia1">Low Sepia</label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun2()" id="sepia2">Med Sepia</label>
+                <label class="form-check-label box saturation"><input type="checkbox" class="form-check-input" value="" onclick="saturate3fun()" id="saturate3">High Saturate</label>
               </div>
               <div class="form-check">
-                <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun3()" id="sepia3">High Sepia</label>
+                <label class="form-check-label box saturation"><input type="checkbox" class="form-check-input" value="" onclick="saturate4fun()" id="saturate4">Extreme Saturate</label>
+              </div>
+                <div class="form-check">
+                    <label class="form-check-label box sepia"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun1()" id="sepia1">Low Sepia</label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label box sepia"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun2()" id="sepia2">Med Sepia</label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label box sepia"><input type="checkbox" class="form-check-input" value="" onclick="sepiafun3()" id="sepia3">High Sepia</label>
             </div>
             <div class="form-check">
-              <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="binarizefun()" id="binarize">Binarize</label>
+              <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="binarizefun()" id="binarize">Binarize</label>
           </div>
           <div class="form-check">
-            <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="edge">Edge</label>
+            <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="edge">Edge</label>
         </div>
         <div class="form-check">
-          <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="emboss">Emboss</label>
+          <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="emboss">Emboss</label>
       </div>
       <div class="form-check">
-        <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="flip">Flip</label>
+        <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="flip">Flip</label>
     </div>
     <div class="form-check">
-      <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="gamma">Gamma</label>
+      <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="gamma">Gamma</label>
   </div>
   <div class="form-check">
-    <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="mosaic">Mosaic</label>
+    <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="mosaic">Mosaic</label>
 </div>
 <div class="form-check">
-  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="posterize">Posterize</label>
+  <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="posterize">Posterize</label>
 </div>
 <div class="form-check">
-  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="sharpen">Sharpen</label>
+  <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="sharpen">Sharpen</label>
 </div>
 <div class="form-check">
-  <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="solarize">Solarize</label>
+  <label class="form-check-label box advanced"><input type="checkbox" class="form-check-input" value="" onclick="updateImageDisplay()" id="solarize">Solarize</label>
 </div>
           </div>
         </div>
         <div id="login-sec">
             <%
-            loginBtn = '<button type="button" id="lgbtn" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login</button>';
+            loginBtn = '';
             console.log(user)
             %>
           <%- user == null ? loginBtn : "Logged in as " + user.username +". <br>Not you? <a href='/logout'>Logout</a>" %>
@@ -305,3 +338,4 @@
   <script src="/javascripts/index.js"></script>
 </body>
 </html>
+
