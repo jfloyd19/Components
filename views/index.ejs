@@ -57,9 +57,9 @@
         <div class="row">
             <a id="gallery-link" style="margin-bottom:5%" href="/gallery">View Gallery</a>
         </div>
+	<h3 class="display-4" id="filter-title">Filters</h3>
         <div class="row list_container" style="height: 500px" id="filter-row">
           <div class="col filters">
-            <h3 class="display-4" id="filter-title">Filters</h3>
                 <div class="form-check">
                     <label class="form-check-label"><input type="checkbox" class="form-check-input" value="" onclick="grayfun()" id="grayscale">Grayscale</label>
                 </div>
@@ -175,7 +175,7 @@
         </div>
         <div id="login-sec">
             <%
-            loginBtn = '<button type="button" id="lgbtn" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login</button>';
+            loginBtn = '';
             console.log(user)
             %>
           <%- user == null ? loginBtn : "Logged in as " + user.username +". <br>Not you? <a href='/logout'>Logout</a>" %>
